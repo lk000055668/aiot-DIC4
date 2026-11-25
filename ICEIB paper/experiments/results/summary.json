@@ -1,0 +1,248 @@
+{
+  "dataset": {
+    "doi": "10.24432/C58K54",
+    "zip_sha256": "9f84b46ade8a2d8e1286ec4b2b6c2987a45a755c59f263be3b3b3d10dfbda3ff",
+    "member": "household_power_consumption.txt",
+    "member_sha256": "4259c9d7ece5dbee9ab8d53682baac68d791c864f0f64a52b4043cb3b90894b7",
+    "rows": 2075259,
+    "missing_power_rows": 25979,
+    "identical_readings_collapsed": 0,
+    "conflicting_minutes": 0,
+    "clock": "Recorded timestamps parsed day-first, with no timezone conversion",
+    "first_minute": "2006-12-16T17:24:00",
+    "last_minute": "2010-11-26T21:02:00",
+    "complete_hours": 34085,
+    "scheduled_hours": 34589
+  },
+  "script_sha256": "4ca2fd03ea907bce3dc5a40cabd0130eabcc11af8aa71555aa6655b2f1bec704",
+  "software": {
+    "python": "3.14.7",
+    "numpy": "2.5.5",
+    "pandas": "3.0.6",
+    "scikit-learn": "1.9.1"
+  },
+  "split": {
+    "training_start": "2006-12-16T17:00:00",
+    "validation_start": "2009-09-20T13:00:00",
+    "test_start": "2010-04-24T17:00:00",
+    "end_exclusive": "2010-11-26T22:00:00",
+    "training_hours": 24212,
+    "validation_hours": 5188,
+    "test_hours": 5189
+  },
+  "forecast": {
+    "validation": {
+      "fit": {
+        "training_samples": 22513,
+        "latest_training_label_end": "2009-09-20T13:00:00",
+        "model_parameters": {
+          "bootstrap": true,
+          "ccp_alpha": 0.0,
+          "criterion": "squared_error",
+          "max_depth": 12,
+          "max_features": 1.0,
+          "max_leaf_nodes": null,
+          "max_samples": null,
+          "min_impurity_decrease": 0.0,
+          "min_samples_leaf": 5,
+          "min_samples_split": 2,
+          "min_weight_fraction_leaf": 0.0,
+          "monotonic_cst": null,
+          "n_estimators": 200,
+          "n_jobs": 1,
+          "oob_score": false,
+          "random_state": 42,
+          "verbose": 0,
+          "warm_start": false
+        },
+        "features": [
+          "lag_1",
+          "lag_2",
+          "lag_24",
+          "lag_168",
+          "mean_3",
+          "sd_3",
+          "mean_24",
+          "sd_24",
+          "hour",
+          "weekday",
+          "month",
+          "weekend"
+        ]
+      },
+      "scheduled_hours": 5188,
+      "incomplete_targets": 98,
+      "complete_targets_with_any_missing_prediction": 363,
+      "common_hours": 4727,
+      "methods": {
+        "persistence": {
+          "available_hours": 5090,
+          "availability": 0.9811102544333077,
+          "unavailable_hours": 98,
+          "mae_kwh": 0.45927228686270355,
+          "rmse_kwh": 0.6828109073989009
+        },
+        "daily_seasonal_naive": {
+          "available_hours": 5090,
+          "availability": 0.9811102544333077,
+          "unavailable_hours": 98,
+          "mae_kwh": 0.6597176503772654,
+          "rmse_kwh": 0.9503385628415241
+        },
+        "random_forest": {
+          "available_hours": 4738,
+          "availability": 0.9132613723978412,
+          "unavailable_hours": 450,
+          "mae_kwh": 0.3708501857945633,
+          "rmse_kwh": 0.538028676090245
+        }
+      }
+    },
+    "test": {
+      "fit": {
+        "training_samples": 27240,
+        "latest_training_label_end": "2010-04-24T17:00:00",
+        "model_parameters": {
+          "bootstrap": true,
+          "ccp_alpha": 0.0,
+          "criterion": "squared_error",
+          "max_depth": 12,
+          "max_features": 1.0,
+          "max_leaf_nodes": null,
+          "max_samples": null,
+          "min_impurity_decrease": 0.0,
+          "min_samples_leaf": 5,
+          "min_samples_split": 2,
+          "min_weight_fraction_leaf": 0.0,
+          "monotonic_cst": null,
+          "n_estimators": 200,
+          "n_jobs": 1,
+          "oob_score": false,
+          "random_state": 42,
+          "verbose": 0,
+          "warm_start": false
+        },
+        "features": [
+          "lag_1",
+          "lag_2",
+          "lag_24",
+          "lag_168",
+          "mean_3",
+          "sd_3",
+          "mean_24",
+          "sd_24",
+          "hour",
+          "weekday",
+          "month",
+          "weekend"
+        ]
+      },
+      "scheduled_hours": 5189,
+      "incomplete_targets": 216,
+      "complete_targets_with_any_missing_prediction": 383,
+      "common_hours": 4590,
+      "methods": {
+        "persistence": {
+          "available_hours": 4974,
+          "availability": 0.9585661977259587,
+          "unavailable_hours": 215,
+          "mae_kwh": 0.3857869426289034,
+          "rmse_kwh": 0.58452003739288
+        },
+        "daily_seasonal_naive": {
+          "available_hours": 4974,
+          "availability": 0.9585661977259587,
+          "unavailable_hours": 215,
+          "mae_kwh": 0.5036366739288308,
+          "rmse_kwh": 0.7526481217054579
+        },
+        "random_forest": {
+          "available_hours": 4598,
+          "availability": 0.8861052225862401,
+          "unavailable_hours": 591,
+          "mae_kwh": 0.32109531638867145,
+          "rmse_kwh": 0.469033574702812
+        }
+      }
+    }
+  },
+  "anomaly": {
+    "scheduled_hours": 5189,
+    "scored_hours": 4827,
+    "status_counts": {
+      "scored": 4827,
+      "incomplete_target": 216,
+      "insufficient_reference": 146
+    },
+    "observed_candidates_by_threshold": {
+      "3.0": {
+        "high": 573,
+        "low": 62
+      },
+      "3.5": {
+        "high": 510,
+        "low": 43
+      },
+      "4.0": {
+        "high": 451,
+        "low": 27
+      }
+    },
+    "fixtures": {
+      "modified_z": 4.0470000000000015,
+      "passed": 4
+    },
+    "time_isolation": {
+      "all_test_reference_indices_strictly_past": true,
+      "mutation_cases_passed": 150
+    },
+    "synthetic": {
+      "sampling_seed": 42,
+      "same_scored_anchors_per_shift": 150,
+      "original_anchor_candidates": {
+        "3.0": {
+          "high": 15,
+          "low": 3
+        },
+        "3.5": {
+          "high": 15,
+          "low": 2
+        },
+        "4.0": {
+          "high": 14,
+          "low": 2
+        }
+      },
+      "candidate_counts_by_delta_kwh": {
+        "0.5": {
+          "3.0": {
+            "high": 56,
+            "low": 2
+          },
+          "3.5": {
+            "high": 52,
+            "low": 0
+          },
+          "4.0": {
+            "high": 48,
+            "low": 0
+          }
+        },
+        "1.0": {
+          "3.0": {
+            "high": 80,
+            "low": 0
+          },
+          "3.5": {
+            "high": 71,
+            "low": 0
+          },
+          "4.0": {
+            "high": 67,
+            "low": 0
+          }
+        }
+      }
+    }
+  }
+}

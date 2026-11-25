@@ -1,0 +1,2282 @@
+{
+  "data_hashes": {
+    "archive": "9f84b46ade8a2d8e1286ec4b2b6c2987a45a755c59f263be3b3b3d10dfbda3ff",
+    "summary": "3370e0c9edd72374d84f906e65a43b1c1889ef050d89a15ec668fb20b36abf69",
+    "forecast": "b208012ba26507fc5d67b53382e2a6318696501fa03b4137db5ea8a37d3b317d",
+    "screen": "8f5df9b3c27a7d74ba1b5ca18f8bd8cf56bd5d05b350620ff4865e0e80561bdf"
+  },
+  "pilot": [
+    {
+      "family": "query",
+      "cutoff": "2010-04-27T23:00:00",
+      "question": "Report household electricity use and data coverage for [2010-04-27T22:00:00, 2010-04-27T23:00:00).",
+      "expected": {
+        "claims": [
+          {
+            "field": "household",
+            "start": "2010-04-27T22:00:00",
+            "end": "2010-04-27T23:00:00",
+            "scope": "observed",
+            "name": "energy",
+            "value": 0.44313333333333316,
+            "unit": "kWh"
+          },
+          {
+            "field": "household",
+            "start": "2010-04-27T22:00:00",
+            "end": "2010-04-27T23:00:00",
+            "scope": "observed",
+            "name": "coverage",
+            "value": 100.0,
+            "unit": "%"
+          }
+        ],
+        "status": "answer",
+        "reason": null,
+        "recommendation_rule": null
+      },
+      "reference": {
+        "tool": "meter",
+        "arguments": {
+          "field": "household",
+          "start": "2010-04-27T22:00:00",
+          "end": "2010-04-27T23:00:00"
+        },
+        "rule": null
+      },
+      "tier": "ordinary",
+      "id": "pilot-query-ordinary"
+    },
+    {
+      "family": "query",
+      "cutoff": "2010-09-29T00:00:00",
+      "question": "Report household electricity use and data coverage for [2010-09-28T00:00:00, 2010-09-29T00:00:00).",
+      "expected": {
+        "claims": [
+          {
+            "field": "household",
+            "start": "2010-09-28T00:00:00",
+            "end": "2010-09-29T00:00:00",
+            "scope": "partial",
+            "name": "partial_energy",
+            "value": 7.840433333333334,
+            "unit": "kWh"
+          },
+          {
+            "field": "household",
+            "start": "2010-09-28T00:00:00",
+            "end": "2010-09-29T00:00:00",
+            "scope": "partial",
+            "name": "coverage",
+            "value": 19.930555555555557,
+            "unit": "%"
+          }
+        ],
+        "status": "limitation",
+        "reason": "incomplete_interval",
+        "recommendation_rule": null
+      },
+      "reference": {
+        "tool": "meter",
+        "arguments": {
+          "field": "household",
+          "start": "2010-09-28T00:00:00",
+          "end": "2010-09-29T00:00:00"
+        },
+        "rule": null
+      },
+      "tier": "boundary",
+      "id": "pilot-query-boundary"
+    },
+    {
+      "family": "compare",
+      "cutoff": "2010-09-12T14:00:00",
+      "question": "Using [2010-09-12T12:00:00, 2010-09-12T13:00:00) as the baseline, report the change in household electricity use in [2010-09-12T13:00:00, 2010-09-12T14:00:00) in kWh and percent.",
+      "expected": {
+        "claims": [
+          {
+            "field": "household",
+            "start": "2010-09-12T13:00:00",
+            "end": "2010-09-12T14:00:00",
+            "scope": "comparison",
+            "name": "baseline_start",
+            "value": "2010-09-12T12:00:00",
+            "unit": ""
+          },
+          {
+            "field": "household",
+            "start": "2010-09-12T13:00:00",
+            "end": "2010-09-12T14:00:00",
+            "scope": "comparison",
+            "name": "baseline_end",
+            "value": "2010-09-12T13:00:00",
+            "unit": ""
+          },
+          {
+            "field": "household",
+            "start": "2010-09-12T13:00:00",
+            "end": "2010-09-12T14:00:00",
+            "scope": "comparison",
+            "name": "baseline_energy",
+            "value": 1.153433333333333,
+            "unit": "kWh"
+          },
+          {
+            "field": "household",
+            "start": "2010-09-12T13:00:00",
+            "end": "2010-09-12T14:00:00",
+            "scope": "comparison",
+            "name": "difference",
+            "value": 0.9561000000000006,
+            "unit": "kWh"
+          },
+          {
+            "field": "household",
+            "start": "2010-09-12T13:00:00",
+            "end": "2010-09-12T14:00:00",
+            "scope": "comparison",
+            "name": "relative_change",
+            "value": 82.8916567927637,
+            "unit": "%"
+          }
+        ],
+        "status": "answer",
+        "reason": null,
+        "recommendation_rule": null
+      },
+      "reference": {
+        "tool": "compare",
+        "arguments": {
+          "field": "household",
+          "start": "2010-09-12T13:00:00",
+          "end": "2010-09-12T14:00:00",
+          "baseline_start": "2010-09-12T12:00:00",
+          "baseline_end": "2010-09-12T13:00:00"
+        },
+        "rule": null
+      },
+      "tier": "ordinary",
+      "id": "pilot-compare-ordinary"
+    },
+    {
+      "family": "compare",
+      "cutoff": "2010-10-03T08:00:00",
+      "question": "Using [2010-10-03T06:00:00, 2010-10-03T07:00:00) as the baseline, report the change in laundry electricity use in [2010-10-03T07:00:00, 2010-10-03T08:00:00) in kWh and percent.",
+      "expected": {
+        "claims": [
+          {
+            "field": "laundry",
+            "start": "2010-10-03T07:00:00",
+            "end": "2010-10-03T08:00:00",
+            "scope": "comparison",
+            "name": "baseline_start",
+            "value": "2010-10-03T06:00:00",
+            "unit": ""
+          },
+          {
+            "field": "laundry",
+            "start": "2010-10-03T07:00:00",
+            "end": "2010-10-03T08:00:00",
+            "scope": "comparison",
+            "name": "baseline_end",
+            "value": "2010-10-03T07:00:00",
+            "unit": ""
+          },
+          {
+            "field": "laundry",
+            "start": "2010-10-03T07:00:00",
+            "end": "2010-10-03T08:00:00",
+            "scope": "comparison",
+            "name": "baseline_energy",
+            "value": 0.0,
+            "unit": "kWh"
+          },
+          {
+            "field": "laundry",
+            "start": "2010-10-03T07:00:00",
+            "end": "2010-10-03T08:00:00",
+            "scope": "comparison",
+            "name": "difference",
+            "value": 0.027,
+            "unit": "kWh"
+          }
+        ],
+        "status": "limitation",
+        "reason": "zero_baseline",
+        "recommendation_rule": null
+      },
+      "reference": {
+        "tool": "compare",
+        "arguments": {
+          "field": "laundry",
+          "start": "2010-10-03T07:00:00",
+          "end": "2010-10-03T08:00:00",
+          "baseline_start": "2010-10-03T06:00:00",
+          "baseline_end": "2010-10-03T07:00:00"
+        },
+        "rule": null
+      },
+      "tier": "boundary",
+      "id": "pilot-compare-boundary"
+    },
+    {
+      "family": "screen",
+      "cutoff": "2010-08-09T03:00:00",
+      "question": "Screen household electricity use for [2010-08-09T02:00:00, 2010-08-09T03:00:00). Report the modified score, candidate classification, and number of reference hours when available.",
+      "expected": {
+        "claims": [
+          {
+            "field": "household",
+            "start": "2010-08-09T02:00:00",
+            "end": "2010-08-09T03:00:00",
+            "scope": "screening",
+            "name": "score",
+            "value": 3.612072336818314,
+            "unit": ""
+          },
+          {
+            "field": "household",
+            "start": "2010-08-09T02:00:00",
+            "end": "2010-08-09T03:00:00",
+            "scope": "screening",
+            "name": "flag",
+            "value": "high",
+            "unit": ""
+          },
+          {
+            "field": "household",
+            "start": "2010-08-09T02:00:00",
+            "end": "2010-08-09T03:00:00",
+            "scope": "screening",
+            "name": "reference_count",
+            "value": 40,
+            "unit": "hours"
+          }
+        ],
+        "status": "answer",
+        "reason": null,
+        "recommendation_rule": null
+      },
+      "reference": {
+        "tool": "screen",
+        "arguments": {
+          "start": "2010-08-09T02:00:00"
+        },
+        "rule": null
+      },
+      "tier": "ordinary",
+      "id": "pilot-screen-ordinary"
+    },
+    {
+      "family": "screen",
+      "cutoff": "2010-10-03T15:00:00",
+      "question": "Screen household electricity use for [2010-10-03T14:00:00, 2010-10-03T15:00:00). Report the modified score, candidate classification, and number of reference hours when available.",
+      "expected": {
+        "claims": [],
+        "status": "limitation",
+        "reason": "insufficient_reference",
+        "recommendation_rule": null
+      },
+      "reference": {
+        "tool": "screen",
+        "arguments": {
+          "start": "2010-10-03T14:00:00"
+        },
+        "rule": null
+      },
+      "tier": "boundary",
+      "id": "pilot-screen-boundary"
+    },
+    {
+      "family": "forecast",
+      "cutoff": "2010-07-20T06:00:00",
+      "question": "At 2010-07-20T06:00:00, forecast household electricity use for the next 1 hour(s). Identify the interval and the method.",
+      "expected": {
+        "claims": [
+          {
+            "field": "household",
+            "start": "2010-07-20T06:00:00",
+            "end": "2010-07-20T07:00:00",
+            "scope": "forecast",
+            "name": "estimate",
+            "value": 0.582892400845074,
+            "unit": "kWh"
+          },
+          {
+            "field": "household",
+            "start": "2010-07-20T06:00:00",
+            "end": "2010-07-20T07:00:00",
+            "scope": "forecast",
+            "name": "method",
+            "value": "random_forest",
+            "unit": ""
+          }
+        ],
+        "status": "answer",
+        "reason": null,
+        "recommendation_rule": null
+      },
+      "reference": {
+        "tool": "forecast",
+        "arguments": {
+          "hours": 1
+        },
+        "rule": null
+      },
+      "tier": "ordinary",
+      "id": "pilot-forecast-ordinary"
+    },
+    {
+      "family": "forecast",
+      "cutoff": "2010-08-18T20:00:00",
+      "question": "At 2010-08-18T20:00:00, forecast household electricity use for the next 1 hour(s). Identify the interval and the method.",
+      "expected": {
+        "claims": [
+          {
+            "field": "household",
+            "start": "2010-08-18T20:00:00",
+            "end": "2010-08-18T21:00:00",
+            "scope": "forecast",
+            "name": "estimate",
+            "value": 0.869866666666667,
+            "unit": "kWh"
+          },
+          {
+            "field": "household",
+            "start": "2010-08-18T20:00:00",
+            "end": "2010-08-18T21:00:00",
+            "scope": "forecast",
+            "name": "method",
+            "value": "daily_seasonal_naive",
+            "unit": ""
+          }
+        ],
+        "status": "answer",
+        "reason": null,
+        "recommendation_rule": null
+      },
+      "reference": {
+        "tool": "forecast",
+        "arguments": {
+          "hours": 1
+        },
+        "rule": null
+      },
+      "tier": "boundary",
+      "id": "pilot-forecast-boundary"
+    },
+    {
+      "family": "advise",
+      "cutoff": "2010-07-25T07:00:00",
+      "question": "Report household electricity use for [2010-07-25T06:00:00, 2010-07-25T07:00:00) and suggest one evidence-linked inspection step.",
+      "expected": {
+        "claims": [
+          {
+            "field": "household",
+            "start": "2010-07-25T06:00:00",
+            "end": "2010-07-25T07:00:00",
+            "scope": "observed",
+            "name": "energy",
+            "value": 0.8814333333333333,
+            "unit": "kWh"
+          }
+        ],
+        "status": "answer",
+        "reason": null,
+        "recommendation_rule": "inspect_peak"
+      },
+      "reference": {
+        "tool": "meter",
+        "arguments": {
+          "field": "household",
+          "start": "2010-07-25T06:00:00",
+          "end": "2010-07-25T07:00:00"
+        },
+        "rule": "inspect_peak"
+      },
+      "tier": "ordinary",
+      "id": "pilot-advise-ordinary"
+    },
+    {
+      "family": "advise",
+      "cutoff": "2010-08-10T19:00:00",
+      "question": "Can you identify the individual heating or cooling appliance that caused use in [2010-08-10T18:00:00, 2010-08-10T19:00:00)?",
+      "expected": {
+        "claims": [],
+        "status": "limitation",
+        "reason": "unsupported_scope",
+        "recommendation_rule": null
+      },
+      "reference": {
+        "tool": null,
+        "arguments": null,
+        "rule": null
+      },
+      "tier": "boundary",
+      "id": "pilot-advise-boundary"
+    }
+  ],
+  "candidate": [
+    {
+      "family": "query",
+      "cutoff": "2010-08-10T10:00:00",
+      "question": "Report household electricity use and data coverage for [2010-08-10T09:00:00, 2010-08-10T10:00:00).",
+      "expected": {
+        "claims": [
+          {
+            "field": "household",
+            "start": "2010-08-10T09:00:00",
+            "end": "2010-08-10T10:00:00",
+            "scope": "observed",
+            "name": "energy",
+            "value": 0.3389666666666667,
+            "unit": "kWh"
+          },
+          {
+            "field": "household",
+            "start": "2010-08-10T09:00:00",
+            "end": "2010-08-10T10:00:00",
+            "scope": "observed",
+            "name": "coverage",
+            "value": 100.0,
+            "unit": "%"
+          }
+        ],
+        "status": "answer",
+        "reason": null,
+        "recommendation_rule": null
+      },
+      "reference": {
+        "tool": "meter",
+        "arguments": {
+          "field": "household",
+          "start": "2010-08-10T09:00:00",
+          "end": "2010-08-10T10:00:00"
+        },
+        "rule": null
+      },
+      "tier": "ordinary",
+      "id": "query-ordinary-01"
+    },
+    {
+      "family": "query",
+      "cutoff": "2010-10-05T04:00:00",
+      "question": "Report household electricity use and data coverage for [2010-10-05T03:00:00, 2010-10-05T04:00:00).",
+      "expected": {
+        "claims": [
+          {
+            "field": "household",
+            "start": "2010-10-05T03:00:00",
+            "end": "2010-10-05T04:00:00",
+            "scope": "observed",
+            "name": "energy",
+            "value": 0.30883333333333346,
+            "unit": "kWh"
+          },
+          {
+            "field": "household",
+            "start": "2010-10-05T03:00:00",
+            "end": "2010-10-05T04:00:00",
+            "scope": "observed",
+            "name": "coverage",
+            "value": 100.0,
+            "unit": "%"
+          }
+        ],
+        "status": "answer",
+        "reason": null,
+        "recommendation_rule": null
+      },
+      "reference": {
+        "tool": "meter",
+        "arguments": {
+          "field": "household",
+          "start": "2010-10-05T03:00:00",
+          "end": "2010-10-05T04:00:00"
+        },
+        "rule": null
+      },
+      "tier": "ordinary",
+      "id": "query-ordinary-02"
+    },
+    {
+      "family": "query",
+      "cutoff": "2010-11-11T02:00:00",
+      "question": "Report household electricity use and data coverage for [2010-11-11T01:00:00, 2010-11-11T02:00:00).",
+      "expected": {
+        "claims": [
+          {
+            "field": "household",
+            "start": "2010-11-11T01:00:00",
+            "end": "2010-11-11T02:00:00",
+            "scope": "observed",
+            "name": "energy",
+            "value": 0.35243333333333327,
+            "unit": "kWh"
+          },
+          {
+            "field": "household",
+            "start": "2010-11-11T01:00:00",
+            "end": "2010-11-11T02:00:00",
+            "scope": "observed",
+            "name": "coverage",
+            "value": 100.0,
+            "unit": "%"
+          }
+        ],
+        "status": "answer",
+        "reason": null,
+        "recommendation_rule": null
+      },
+      "reference": {
+        "tool": "meter",
+        "arguments": {
+          "field": "household",
+          "start": "2010-11-11T01:00:00",
+          "end": "2010-11-11T02:00:00"
+        },
+        "rule": null
+      },
+      "tier": "ordinary",
+      "id": "query-ordinary-03"
+    },
+    {
+      "family": "query",
+      "cutoff": "2010-07-17T12:00:00",
+      "question": "Report household electricity use and data coverage for [2010-07-17T11:00:00, 2010-07-17T12:00:00).",
+      "expected": {
+        "claims": [
+          {
+            "field": "household",
+            "start": "2010-07-17T11:00:00",
+            "end": "2010-07-17T12:00:00",
+            "scope": "observed",
+            "name": "energy",
+            "value": 0.3967000000000002,
+            "unit": "kWh"
+          },
+          {
+            "field": "household",
+            "start": "2010-07-17T11:00:00",
+            "end": "2010-07-17T12:00:00",
+            "scope": "observed",
+            "name": "coverage",
+            "value": 100.0,
+            "unit": "%"
+          }
+        ],
+        "status": "answer",
+        "reason": null,
+        "recommendation_rule": null
+      },
+      "reference": {
+        "tool": "meter",
+        "arguments": {
+          "field": "household",
+          "start": "2010-07-17T11:00:00",
+          "end": "2010-07-17T12:00:00"
+        },
+        "rule": null
+      },
+      "tier": "ordinary",
+      "id": "query-ordinary-04"
+    },
+    {
+      "family": "query",
+      "cutoff": "2010-05-07T08:00:00",
+      "question": "Report household electricity use and data coverage for [2010-05-07T07:00:00, 2010-05-07T08:00:00).",
+      "expected": {
+        "claims": [
+          {
+            "field": "household",
+            "start": "2010-05-07T07:00:00",
+            "end": "2010-05-07T08:00:00",
+            "scope": "observed",
+            "name": "energy",
+            "value": 2.043266666666667,
+            "unit": "kWh"
+          },
+          {
+            "field": "household",
+            "start": "2010-05-07T07:00:00",
+            "end": "2010-05-07T08:00:00",
+            "scope": "observed",
+            "name": "coverage",
+            "value": 100.0,
+            "unit": "%"
+          }
+        ],
+        "status": "answer",
+        "reason": null,
+        "recommendation_rule": null
+      },
+      "reference": {
+        "tool": "meter",
+        "arguments": {
+          "field": "household",
+          "start": "2010-05-07T07:00:00",
+          "end": "2010-05-07T08:00:00"
+        },
+        "rule": null
+      },
+      "tier": "ordinary",
+      "id": "query-ordinary-05"
+    },
+    {
+      "family": "query",
+      "cutoff": "2010-10-28T14:00:00",
+      "question": "Report household electricity use and data coverage for [2010-10-28T13:00:00, 2010-10-28T14:00:00).",
+      "expected": {
+        "claims": [
+          {
+            "field": "household",
+            "start": "2010-10-28T13:00:00",
+            "end": "2010-10-28T14:00:00",
+            "scope": "observed",
+            "name": "energy",
+            "value": 0.5296666666666664,
+            "unit": "kWh"
+          },
+          {
+            "field": "household",
+            "start": "2010-10-28T13:00:00",
+            "end": "2010-10-28T14:00:00",
+            "scope": "observed",
+            "name": "coverage",
+            "value": 100.0,
+            "unit": "%"
+          }
+        ],
+        "status": "answer",
+        "reason": null,
+        "recommendation_rule": null
+      },
+      "reference": {
+        "tool": "meter",
+        "arguments": {
+          "field": "household",
+          "start": "2010-10-28T13:00:00",
+          "end": "2010-10-28T14:00:00"
+        },
+        "rule": null
+      },
+      "tier": "ordinary",
+      "id": "query-ordinary-06"
+    },
+    {
+      "family": "query",
+      "cutoff": "2010-06-13T00:00:00",
+      "question": "Report household electricity use and data coverage for [2010-06-12T00:00:00, 2010-06-13T00:00:00).",
+      "expected": {
+        "claims": [
+          {
+            "field": "household",
+            "start": "2010-06-12T00:00:00",
+            "end": "2010-06-13T00:00:00",
+            "scope": "partial",
+            "name": "partial_energy",
+            "value": 32.885133333333336,
+            "unit": "kWh"
+          },
+          {
+            "field": "household",
+            "start": "2010-06-12T00:00:00",
+            "end": "2010-06-13T00:00:00",
+            "scope": "partial",
+            "name": "coverage",
+            "value": 99.93055555555556,
+            "unit": "%"
+          }
+        ],
+        "status": "limitation",
+        "reason": "incomplete_interval",
+        "recommendation_rule": null
+      },
+      "reference": {
+        "tool": "meter",
+        "arguments": {
+          "field": "household",
+          "start": "2010-06-12T00:00:00",
+          "end": "2010-06-13T00:00:00"
+        },
+        "rule": null
+      },
+      "tier": "boundary",
+      "id": "query-boundary-01"
+    },
+    {
+      "family": "query",
+      "cutoff": "2010-08-10T19:00:00",
+      "question": "Report metered household use in [2010-08-10T19:00:00, 2010-08-10T20:00:00).",
+      "expected": {
+        "claims": [],
+        "status": "limitation",
+        "reason": "outside_replay",
+        "recommendation_rule": null
+      },
+      "reference": {
+        "tool": "meter",
+        "arguments": {
+          "field": "household",
+          "start": "2010-08-10T19:00:00",
+          "end": "2010-08-10T20:00:00"
+        },
+        "rule": null
+      },
+      "tier": "boundary",
+      "id": "query-boundary-02"
+    },
+    {
+      "family": "query",
+      "cutoff": "2010-08-10T19:00:00",
+      "question": "How much household electricity was used in that period?",
+      "expected": {
+        "claims": [],
+        "status": "clarify",
+        "reason": "ambiguous_request",
+        "recommendation_rule": null
+      },
+      "reference": {
+        "tool": null,
+        "arguments": null,
+        "rule": null
+      },
+      "tier": "boundary",
+      "id": "query-boundary-03"
+    },
+    {
+      "family": "query",
+      "cutoff": "2010-08-10T19:00:00",
+      "question": "Report the directly measured refrigerator energy in [2010-08-10T18:00:00, 2010-08-10T19:00:00).",
+      "expected": {
+        "claims": [],
+        "status": "limitation",
+        "reason": "unsupported_scope",
+        "recommendation_rule": null
+      },
+      "reference": {
+        "tool": null,
+        "arguments": null,
+        "rule": null
+      },
+      "tier": "boundary",
+      "id": "query-boundary-04"
+    },
+    {
+      "family": "compare",
+      "cutoff": "2010-06-25T22:00:00",
+      "question": "Using [2010-06-25T20:00:00, 2010-06-25T21:00:00) as the baseline, report the change in household electricity use in [2010-06-25T21:00:00, 2010-06-25T22:00:00) in kWh and percent.",
+      "expected": {
+        "claims": [
+          {
+            "field": "household",
+            "start": "2010-06-25T21:00:00",
+            "end": "2010-06-25T22:00:00",
+            "scope": "comparison",
+            "name": "baseline_start",
+            "value": "2010-06-25T20:00:00",
+            "unit": ""
+          },
+          {
+            "field": "household",
+            "start": "2010-06-25T21:00:00",
+            "end": "2010-06-25T22:00:00",
+            "scope": "comparison",
+            "name": "baseline_end",
+            "value": "2010-06-25T21:00:00",
+            "unit": ""
+          },
+          {
+            "field": "household",
+            "start": "2010-06-25T21:00:00",
+            "end": "2010-06-25T22:00:00",
+            "scope": "comparison",
+            "name": "baseline_energy",
+            "value": 0.32926666666666665,
+            "unit": "kWh"
+          },
+          {
+            "field": "household",
+            "start": "2010-06-25T21:00:00",
+            "end": "2010-06-25T22:00:00",
+            "scope": "comparison",
+            "name": "difference",
+            "value": 1.0018333333333334,
+            "unit": "kWh"
+          },
+          {
+            "field": "household",
+            "start": "2010-06-25T21:00:00",
+            "end": "2010-06-25T22:00:00",
+            "scope": "comparison",
+            "name": "relative_change",
+            "value": 304.2619963555376,
+            "unit": "%"
+          }
+        ],
+        "status": "answer",
+        "reason": null,
+        "recommendation_rule": null
+      },
+      "reference": {
+        "tool": "compare",
+        "arguments": {
+          "field": "household",
+          "start": "2010-06-25T21:00:00",
+          "end": "2010-06-25T22:00:00",
+          "baseline_start": "2010-06-25T20:00:00",
+          "baseline_end": "2010-06-25T21:00:00"
+        },
+        "rule": null
+      },
+      "tier": "ordinary",
+      "id": "compare-ordinary-01"
+    },
+    {
+      "family": "compare",
+      "cutoff": "2010-10-14T17:00:00",
+      "question": "Using [2010-10-14T15:00:00, 2010-10-14T16:00:00) as the baseline, report the change in household electricity use in [2010-10-14T16:00:00, 2010-10-14T17:00:00) in kWh and percent.",
+      "expected": {
+        "claims": [
+          {
+            "field": "household",
+            "start": "2010-10-14T16:00:00",
+            "end": "2010-10-14T17:00:00",
+            "scope": "comparison",
+            "name": "baseline_start",
+            "value": "2010-10-14T15:00:00",
+            "unit": ""
+          },
+          {
+            "field": "household",
+            "start": "2010-10-14T16:00:00",
+            "end": "2010-10-14T17:00:00",
+            "scope": "comparison",
+            "name": "baseline_end",
+            "value": "2010-10-14T16:00:00",
+            "unit": ""
+          },
+          {
+            "field": "household",
+            "start": "2010-10-14T16:00:00",
+            "end": "2010-10-14T17:00:00",
+            "scope": "comparison",
+            "name": "baseline_energy",
+            "value": 0.9037999999999999,
+            "unit": "kWh"
+          },
+          {
+            "field": "household",
+            "start": "2010-10-14T16:00:00",
+            "end": "2010-10-14T17:00:00",
+            "scope": "comparison",
+            "name": "difference",
+            "value": 0.053233333333333355,
+            "unit": "kWh"
+          },
+          {
+            "field": "household",
+            "start": "2010-10-14T16:00:00",
+            "end": "2010-10-14T17:00:00",
+            "scope": "comparison",
+            "name": "relative_change",
+            "value": 5.889946153278752,
+            "unit": "%"
+          }
+        ],
+        "status": "answer",
+        "reason": null,
+        "recommendation_rule": null
+      },
+      "reference": {
+        "tool": "compare",
+        "arguments": {
+          "field": "household",
+          "start": "2010-10-14T16:00:00",
+          "end": "2010-10-14T17:00:00",
+          "baseline_start": "2010-10-14T15:00:00",
+          "baseline_end": "2010-10-14T16:00:00"
+        },
+        "rule": null
+      },
+      "tier": "ordinary",
+      "id": "compare-ordinary-02"
+    },
+    {
+      "family": "compare",
+      "cutoff": "2010-06-06T00:00:00",
+      "question": "Using [2010-06-05T22:00:00, 2010-06-05T23:00:00) as the baseline, report the change in household electricity use in [2010-06-05T23:00:00, 2010-06-06T00:00:00) in kWh and percent.",
+      "expected": {
+        "claims": [
+          {
+            "field": "household",
+            "start": "2010-06-05T23:00:00",
+            "end": "2010-06-06T00:00:00",
+            "scope": "comparison",
+            "name": "baseline_start",
+            "value": "2010-06-05T22:00:00",
+            "unit": ""
+          },
+          {
+            "field": "household",
+            "start": "2010-06-05T23:00:00",
+            "end": "2010-06-06T00:00:00",
+            "scope": "comparison",
+            "name": "baseline_end",
+            "value": "2010-06-05T23:00:00",
+            "unit": ""
+          },
+          {
+            "field": "household",
+            "start": "2010-06-05T23:00:00",
+            "end": "2010-06-06T00:00:00",
+            "scope": "comparison",
+            "name": "baseline_energy",
+            "value": 3.024566666666667,
+            "unit": "kWh"
+          },
+          {
+            "field": "household",
+            "start": "2010-06-05T23:00:00",
+            "end": "2010-06-06T00:00:00",
+            "scope": "comparison",
+            "name": "difference",
+            "value": 0.22376666666666534,
+            "unit": "kWh"
+          },
+          {
+            "field": "household",
+            "start": "2010-06-05T23:00:00",
+            "end": "2010-06-06T00:00:00",
+            "scope": "comparison",
+            "name": "relative_change",
+            "value": 7.398304991348578,
+            "unit": "%"
+          }
+        ],
+        "status": "answer",
+        "reason": null,
+        "recommendation_rule": null
+      },
+      "reference": {
+        "tool": "compare",
+        "arguments": {
+          "field": "household",
+          "start": "2010-06-05T23:00:00",
+          "end": "2010-06-06T00:00:00",
+          "baseline_start": "2010-06-05T22:00:00",
+          "baseline_end": "2010-06-05T23:00:00"
+        },
+        "rule": null
+      },
+      "tier": "ordinary",
+      "id": "compare-ordinary-03"
+    },
+    {
+      "family": "compare",
+      "cutoff": "2010-08-04T14:00:00",
+      "question": "Using [2010-08-04T12:00:00, 2010-08-04T13:00:00) as the baseline, report the change in household electricity use in [2010-08-04T13:00:00, 2010-08-04T14:00:00) in kWh and percent.",
+      "expected": {
+        "claims": [
+          {
+            "field": "household",
+            "start": "2010-08-04T13:00:00",
+            "end": "2010-08-04T14:00:00",
+            "scope": "comparison",
+            "name": "baseline_start",
+            "value": "2010-08-04T12:00:00",
+            "unit": ""
+          },
+          {
+            "field": "household",
+            "start": "2010-08-04T13:00:00",
+            "end": "2010-08-04T14:00:00",
+            "scope": "comparison",
+            "name": "baseline_end",
+            "value": "2010-08-04T13:00:00",
+            "unit": ""
+          },
+          {
+            "field": "household",
+            "start": "2010-08-04T13:00:00",
+            "end": "2010-08-04T14:00:00",
+            "scope": "comparison",
+            "name": "baseline_energy",
+            "value": 0.2550333333333334,
+            "unit": "kWh"
+          },
+          {
+            "field": "household",
+            "start": "2010-08-04T13:00:00",
+            "end": "2010-08-04T14:00:00",
+            "scope": "comparison",
+            "name": "difference",
+            "value": 0.022566666666666513,
+            "unit": "kWh"
+          },
+          {
+            "field": "household",
+            "start": "2010-08-04T13:00:00",
+            "end": "2010-08-04T14:00:00",
+            "scope": "comparison",
+            "name": "relative_change",
+            "value": 8.848516533786372,
+            "unit": "%"
+          }
+        ],
+        "status": "answer",
+        "reason": null,
+        "recommendation_rule": null
+      },
+      "reference": {
+        "tool": "compare",
+        "arguments": {
+          "field": "household",
+          "start": "2010-08-04T13:00:00",
+          "end": "2010-08-04T14:00:00",
+          "baseline_start": "2010-08-04T12:00:00",
+          "baseline_end": "2010-08-04T13:00:00"
+        },
+        "rule": null
+      },
+      "tier": "ordinary",
+      "id": "compare-ordinary-04"
+    },
+    {
+      "family": "compare",
+      "cutoff": "2010-10-05T10:00:00",
+      "question": "Using [2010-10-05T08:00:00, 2010-10-05T09:00:00) as the baseline, report the change in household electricity use in [2010-10-05T09:00:00, 2010-10-05T10:00:00) in kWh and percent.",
+      "expected": {
+        "claims": [
+          {
+            "field": "household",
+            "start": "2010-10-05T09:00:00",
+            "end": "2010-10-05T10:00:00",
+            "scope": "comparison",
+            "name": "baseline_start",
+            "value": "2010-10-05T08:00:00",
+            "unit": ""
+          },
+          {
+            "field": "household",
+            "start": "2010-10-05T09:00:00",
+            "end": "2010-10-05T10:00:00",
+            "scope": "comparison",
+            "name": "baseline_end",
+            "value": "2010-10-05T09:00:00",
+            "unit": ""
+          },
+          {
+            "field": "household",
+            "start": "2010-10-05T09:00:00",
+            "end": "2010-10-05T10:00:00",
+            "scope": "comparison",
+            "name": "baseline_energy",
+            "value": 1.517,
+            "unit": "kWh"
+          },
+          {
+            "field": "household",
+            "start": "2010-10-05T09:00:00",
+            "end": "2010-10-05T10:00:00",
+            "scope": "comparison",
+            "name": "difference",
+            "value": 0.3087,
+            "unit": "kWh"
+          },
+          {
+            "field": "household",
+            "start": "2010-10-05T09:00:00",
+            "end": "2010-10-05T10:00:00",
+            "scope": "comparison",
+            "name": "relative_change",
+            "value": 20.34937376400791,
+            "unit": "%"
+          }
+        ],
+        "status": "answer",
+        "reason": null,
+        "recommendation_rule": null
+      },
+      "reference": {
+        "tool": "compare",
+        "arguments": {
+          "field": "household",
+          "start": "2010-10-05T09:00:00",
+          "end": "2010-10-05T10:00:00",
+          "baseline_start": "2010-10-05T08:00:00",
+          "baseline_end": "2010-10-05T09:00:00"
+        },
+        "rule": null
+      },
+      "tier": "ordinary",
+      "id": "compare-ordinary-05"
+    },
+    {
+      "family": "compare",
+      "cutoff": "2010-05-13T05:00:00",
+      "question": "Using [2010-05-13T03:00:00, 2010-05-13T04:00:00) as the baseline, report the change in household electricity use in [2010-05-13T04:00:00, 2010-05-13T05:00:00) in kWh and percent.",
+      "expected": {
+        "claims": [
+          {
+            "field": "household",
+            "start": "2010-05-13T04:00:00",
+            "end": "2010-05-13T05:00:00",
+            "scope": "comparison",
+            "name": "baseline_start",
+            "value": "2010-05-13T03:00:00",
+            "unit": ""
+          },
+          {
+            "field": "household",
+            "start": "2010-05-13T04:00:00",
+            "end": "2010-05-13T05:00:00",
+            "scope": "comparison",
+            "name": "baseline_end",
+            "value": "2010-05-13T04:00:00",
+            "unit": ""
+          },
+          {
+            "field": "household",
+            "start": "2010-05-13T04:00:00",
+            "end": "2010-05-13T05:00:00",
+            "scope": "comparison",
+            "name": "baseline_energy",
+            "value": 0.35579999999999995,
+            "unit": "kWh"
+          },
+          {
+            "field": "household",
+            "start": "2010-05-13T04:00:00",
+            "end": "2010-05-13T05:00:00",
+            "scope": "comparison",
+            "name": "difference",
+            "value": -0.005933333333333235,
+            "unit": "kWh"
+          },
+          {
+            "field": "household",
+            "start": "2010-05-13T04:00:00",
+            "end": "2010-05-13T05:00:00",
+            "scope": "comparison",
+            "name": "relative_change",
+            "value": -1.6676035225782,
+            "unit": "%"
+          }
+        ],
+        "status": "answer",
+        "reason": null,
+        "recommendation_rule": null
+      },
+      "reference": {
+        "tool": "compare",
+        "arguments": {
+          "field": "household",
+          "start": "2010-05-13T04:00:00",
+          "end": "2010-05-13T05:00:00",
+          "baseline_start": "2010-05-13T03:00:00",
+          "baseline_end": "2010-05-13T04:00:00"
+        },
+        "rule": null
+      },
+      "tier": "ordinary",
+      "id": "compare-ordinary-06"
+    },
+    {
+      "family": "compare",
+      "cutoff": "2010-07-20T05:00:00",
+      "question": "Using [2010-07-20T03:00:00, 2010-07-20T04:00:00) as the baseline, report the change in laundry electricity use in [2010-07-20T04:00:00, 2010-07-20T05:00:00) in kWh and percent.",
+      "expected": {
+        "claims": [
+          {
+            "field": "laundry",
+            "start": "2010-07-20T04:00:00",
+            "end": "2010-07-20T05:00:00",
+            "scope": "comparison",
+            "name": "baseline_start",
+            "value": "2010-07-20T03:00:00",
+            "unit": ""
+          },
+          {
+            "field": "laundry",
+            "start": "2010-07-20T04:00:00",
+            "end": "2010-07-20T05:00:00",
+            "scope": "comparison",
+            "name": "baseline_end",
+            "value": "2010-07-20T04:00:00",
+            "unit": ""
+          },
+          {
+            "field": "laundry",
+            "start": "2010-07-20T04:00:00",
+            "end": "2010-07-20T05:00:00",
+            "scope": "comparison",
+            "name": "baseline_energy",
+            "value": 0.0,
+            "unit": "kWh"
+          },
+          {
+            "field": "laundry",
+            "start": "2010-07-20T04:00:00",
+            "end": "2010-07-20T05:00:00",
+            "scope": "comparison",
+            "name": "difference",
+            "value": 0.043,
+            "unit": "kWh"
+          }
+        ],
+        "status": "limitation",
+        "reason": "zero_baseline",
+        "recommendation_rule": null
+      },
+      "reference": {
+        "tool": "compare",
+        "arguments": {
+          "field": "laundry",
+          "start": "2010-07-20T04:00:00",
+          "end": "2010-07-20T05:00:00",
+          "baseline_start": "2010-07-20T03:00:00",
+          "baseline_end": "2010-07-20T04:00:00"
+        },
+        "rule": null
+      },
+      "tier": "boundary",
+      "id": "compare-boundary-01"
+    },
+    {
+      "family": "compare",
+      "cutoff": "2010-05-13T22:00:00",
+      "question": "Using [2010-05-13T20:00:00, 2010-05-13T21:00:00) as the baseline, report the change in household electricity use in [2010-05-13T21:00:00, 2010-05-13T22:00:00) in kWh and percent.",
+      "expected": {
+        "claims": [],
+        "status": "limitation",
+        "reason": "incomplete_interval",
+        "recommendation_rule": null
+      },
+      "reference": {
+        "tool": "compare",
+        "arguments": {
+          "field": "household",
+          "start": "2010-05-13T21:00:00",
+          "end": "2010-05-13T22:00:00",
+          "baseline_start": "2010-05-13T20:00:00",
+          "baseline_end": "2010-05-13T21:00:00"
+        },
+        "rule": null
+      },
+      "tier": "boundary",
+      "id": "compare-boundary-02"
+    },
+    {
+      "family": "compare",
+      "cutoff": "2010-08-10T19:00:00",
+      "question": "Compare metered household energy in [2010-08-10T19:00:00, 2010-08-10T20:00:00) with [2010-08-10T18:00:00, 2010-08-10T19:00:00).",
+      "expected": {
+        "claims": [],
+        "status": "limitation",
+        "reason": "outside_replay",
+        "recommendation_rule": null
+      },
+      "reference": {
+        "tool": "compare",
+        "arguments": {
+          "field": "household",
+          "start": "2010-08-10T19:00:00",
+          "end": "2010-08-10T20:00:00",
+          "baseline_start": "2010-08-10T18:00:00",
+          "baseline_end": "2010-08-10T19:00:00"
+        },
+        "rule": null
+      },
+      "tier": "boundary",
+      "id": "compare-boundary-03"
+    },
+    {
+      "family": "compare",
+      "cutoff": "2010-08-10T19:00:00",
+      "question": "How much higher was household use in [2010-08-10T18:00:00, 2010-08-10T19:00:00) than my usual period?",
+      "expected": {
+        "claims": [],
+        "status": "clarify",
+        "reason": "ambiguous_request",
+        "recommendation_rule": null
+      },
+      "reference": {
+        "tool": null,
+        "arguments": null,
+        "rule": null
+      },
+      "tier": "boundary",
+      "id": "compare-boundary-04"
+    },
+    {
+      "family": "screen",
+      "cutoff": "2010-05-09T13:00:00",
+      "question": "Screen household electricity use for [2010-05-09T12:00:00, 2010-05-09T13:00:00). Report the modified score, candidate classification, and number of reference hours when available.",
+      "expected": {
+        "claims": [
+          {
+            "field": "household",
+            "start": "2010-05-09T12:00:00",
+            "end": "2010-05-09T13:00:00",
+            "scope": "screening",
+            "name": "score",
+            "value": -0.143365135184509,
+            "unit": ""
+          },
+          {
+            "field": "household",
+            "start": "2010-05-09T12:00:00",
+            "end": "2010-05-09T13:00:00",
+            "scope": "screening",
+            "name": "flag",
+            "value": "within_threshold",
+            "unit": ""
+          },
+          {
+            "field": "household",
+            "start": "2010-05-09T12:00:00",
+            "end": "2010-05-09T13:00:00",
+            "scope": "screening",
+            "name": "reference_count",
+            "value": 14,
+            "unit": "hours"
+          }
+        ],
+        "status": "answer",
+        "reason": null,
+        "recommendation_rule": null
+      },
+      "reference": {
+        "tool": "screen",
+        "arguments": {
+          "start": "2010-05-09T12:00:00"
+        },
+        "rule": null
+      },
+      "tier": "ordinary",
+      "id": "screen-ordinary-01"
+    },
+    {
+      "family": "screen",
+      "cutoff": "2010-05-03T08:00:00",
+      "question": "Screen household electricity use for [2010-05-03T07:00:00, 2010-05-03T08:00:00). Report the modified score, candidate classification, and number of reference hours when available.",
+      "expected": {
+        "claims": [
+          {
+            "field": "household",
+            "start": "2010-05-03T07:00:00",
+            "end": "2010-05-03T08:00:00",
+            "scope": "screening",
+            "name": "score",
+            "value": 0.339540035546643,
+            "unit": ""
+          },
+          {
+            "field": "household",
+            "start": "2010-05-03T07:00:00",
+            "end": "2010-05-03T08:00:00",
+            "scope": "screening",
+            "name": "flag",
+            "value": "within_threshold",
+            "unit": ""
+          },
+          {
+            "field": "household",
+            "start": "2010-05-03T07:00:00",
+            "end": "2010-05-03T08:00:00",
+            "scope": "screening",
+            "name": "reference_count",
+            "value": 40,
+            "unit": "hours"
+          }
+        ],
+        "status": "answer",
+        "reason": null,
+        "recommendation_rule": null
+      },
+      "reference": {
+        "tool": "screen",
+        "arguments": {
+          "start": "2010-05-03T07:00:00"
+        },
+        "rule": null
+      },
+      "tier": "ordinary",
+      "id": "screen-ordinary-02"
+    },
+    {
+      "family": "screen",
+      "cutoff": "2010-07-31T03:00:00",
+      "question": "Screen household electricity use for [2010-07-31T02:00:00, 2010-07-31T03:00:00). Report the modified score, candidate classification, and number of reference hours when available.",
+      "expected": {
+        "claims": [
+          {
+            "field": "household",
+            "start": "2010-07-31T02:00:00",
+            "end": "2010-07-31T03:00:00",
+            "scope": "screening",
+            "name": "score",
+            "value": -0.694649365197909,
+            "unit": ""
+          },
+          {
+            "field": "household",
+            "start": "2010-07-31T02:00:00",
+            "end": "2010-07-31T03:00:00",
+            "scope": "screening",
+            "name": "flag",
+            "value": "within_threshold",
+            "unit": ""
+          },
+          {
+            "field": "household",
+            "start": "2010-07-31T02:00:00",
+            "end": "2010-07-31T03:00:00",
+            "scope": "screening",
+            "name": "reference_count",
+            "value": 16,
+            "unit": "hours"
+          }
+        ],
+        "status": "answer",
+        "reason": null,
+        "recommendation_rule": null
+      },
+      "reference": {
+        "tool": "screen",
+        "arguments": {
+          "start": "2010-07-31T02:00:00"
+        },
+        "rule": null
+      },
+      "tier": "ordinary",
+      "id": "screen-ordinary-03"
+    },
+    {
+      "family": "screen",
+      "cutoff": "2010-11-18T19:00:00",
+      "question": "Screen household electricity use for [2010-11-18T18:00:00, 2010-11-18T19:00:00). Report the modified score, candidate classification, and number of reference hours when available.",
+      "expected": {
+        "claims": [
+          {
+            "field": "household",
+            "start": "2010-11-18T18:00:00",
+            "end": "2010-11-18T19:00:00",
+            "scope": "screening",
+            "name": "score",
+            "value": 2.139329553889548,
+            "unit": ""
+          },
+          {
+            "field": "household",
+            "start": "2010-11-18T18:00:00",
+            "end": "2010-11-18T19:00:00",
+            "scope": "screening",
+            "name": "flag",
+            "value": "within_threshold",
+            "unit": ""
+          },
+          {
+            "field": "household",
+            "start": "2010-11-18T18:00:00",
+            "end": "2010-11-18T19:00:00",
+            "scope": "screening",
+            "name": "reference_count",
+            "value": 38,
+            "unit": "hours"
+          }
+        ],
+        "status": "answer",
+        "reason": null,
+        "recommendation_rule": null
+      },
+      "reference": {
+        "tool": "screen",
+        "arguments": {
+          "start": "2010-11-18T18:00:00"
+        },
+        "rule": null
+      },
+      "tier": "ordinary",
+      "id": "screen-ordinary-04"
+    },
+    {
+      "family": "screen",
+      "cutoff": "2010-06-24T04:00:00",
+      "question": "Screen household electricity use for [2010-06-24T03:00:00, 2010-06-24T04:00:00). Report the modified score, candidate classification, and number of reference hours when available.",
+      "expected": {
+        "claims": [
+          {
+            "field": "household",
+            "start": "2010-06-24T03:00:00",
+            "end": "2010-06-24T04:00:00",
+            "scope": "screening",
+            "name": "score",
+            "value": 2.729501373626372,
+            "unit": ""
+          },
+          {
+            "field": "household",
+            "start": "2010-06-24T03:00:00",
+            "end": "2010-06-24T04:00:00",
+            "scope": "screening",
+            "name": "flag",
+            "value": "within_threshold",
+            "unit": ""
+          },
+          {
+            "field": "household",
+            "start": "2010-06-24T03:00:00",
+            "end": "2010-06-24T04:00:00",
+            "scope": "screening",
+            "name": "reference_count",
+            "value": 40,
+            "unit": "hours"
+          }
+        ],
+        "status": "answer",
+        "reason": null,
+        "recommendation_rule": null
+      },
+      "reference": {
+        "tool": "screen",
+        "arguments": {
+          "start": "2010-06-24T03:00:00"
+        },
+        "rule": null
+      },
+      "tier": "ordinary",
+      "id": "screen-ordinary-05"
+    },
+    {
+      "family": "screen",
+      "cutoff": "2010-05-22T22:00:00",
+      "question": "Screen household electricity use for [2010-05-22T21:00:00, 2010-05-22T22:00:00). Report the modified score, candidate classification, and number of reference hours when available.",
+      "expected": {
+        "claims": [
+          {
+            "field": "household",
+            "start": "2010-05-22T21:00:00",
+            "end": "2010-05-22T22:00:00",
+            "scope": "screening",
+            "name": "score",
+            "value": -0.277569109947644,
+            "unit": ""
+          },
+          {
+            "field": "household",
+            "start": "2010-05-22T21:00:00",
+            "end": "2010-05-22T22:00:00",
+            "scope": "screening",
+            "name": "flag",
+            "value": "within_threshold",
+            "unit": ""
+          },
+          {
+            "field": "household",
+            "start": "2010-05-22T21:00:00",
+            "end": "2010-05-22T22:00:00",
+            "scope": "screening",
+            "name": "reference_count",
+            "value": 16,
+            "unit": "hours"
+          }
+        ],
+        "status": "answer",
+        "reason": null,
+        "recommendation_rule": null
+      },
+      "reference": {
+        "tool": "screen",
+        "arguments": {
+          "start": "2010-05-22T21:00:00"
+        },
+        "rule": null
+      },
+      "tier": "ordinary",
+      "id": "screen-ordinary-06"
+    },
+    {
+      "family": "screen",
+      "cutoff": "2010-10-09T11:00:00",
+      "question": "Screen household electricity use for [2010-10-09T10:00:00, 2010-10-09T11:00:00). Report the modified score, candidate classification, and number of reference hours when available.",
+      "expected": {
+        "claims": [],
+        "status": "limitation",
+        "reason": "insufficient_reference",
+        "recommendation_rule": null
+      },
+      "reference": {
+        "tool": "screen",
+        "arguments": {
+          "start": "2010-10-09T10:00:00"
+        },
+        "rule": null
+      },
+      "tier": "boundary",
+      "id": "screen-boundary-01"
+    },
+    {
+      "family": "screen",
+      "cutoff": "2010-08-19T20:00:00",
+      "question": "Screen household electricity use for [2010-08-19T19:00:00, 2010-08-19T20:00:00). Report the modified score, candidate classification, and number of reference hours when available.",
+      "expected": {
+        "claims": [],
+        "status": "limitation",
+        "reason": "incomplete_target",
+        "recommendation_rule": null
+      },
+      "reference": {
+        "tool": "screen",
+        "arguments": {
+          "start": "2010-08-19T19:00:00"
+        },
+        "rule": null
+      },
+      "tier": "boundary",
+      "id": "screen-boundary-02"
+    },
+    {
+      "family": "screen",
+      "cutoff": "2010-08-10T19:00:00",
+      "question": "Screen the measured hour starting at 2010-08-10T19:00:00 for unusual household consumption.",
+      "expected": {
+        "claims": [],
+        "status": "limitation",
+        "reason": "outside_replay",
+        "recommendation_rule": null
+      },
+      "reference": {
+        "tool": "screen",
+        "arguments": {
+          "start": "2010-08-10T19:00:00"
+        },
+        "rule": null
+      },
+      "tier": "boundary",
+      "id": "screen-boundary-03"
+    },
+    {
+      "family": "screen",
+      "cutoff": "2010-08-10T19:00:00",
+      "question": "Screen the earlier household hour for unusual electricity use.",
+      "expected": {
+        "claims": [],
+        "status": "clarify",
+        "reason": "ambiguous_request",
+        "recommendation_rule": null
+      },
+      "reference": {
+        "tool": null,
+        "arguments": null,
+        "rule": null
+      },
+      "tier": "boundary",
+      "id": "screen-boundary-04"
+    },
+    {
+      "family": "forecast",
+      "cutoff": "2010-08-01T07:00:00",
+      "question": "At 2010-08-01T07:00:00, forecast household electricity use for the next 1 hour(s). Identify the interval and the method.",
+      "expected": {
+        "claims": [
+          {
+            "field": "household",
+            "start": "2010-08-01T07:00:00",
+            "end": "2010-08-01T08:00:00",
+            "scope": "forecast",
+            "name": "estimate",
+            "value": 0.375769580344468,
+            "unit": "kWh"
+          },
+          {
+            "field": "household",
+            "start": "2010-08-01T07:00:00",
+            "end": "2010-08-01T08:00:00",
+            "scope": "forecast",
+            "name": "method",
+            "value": "random_forest",
+            "unit": ""
+          }
+        ],
+        "status": "answer",
+        "reason": null,
+        "recommendation_rule": null
+      },
+      "reference": {
+        "tool": "forecast",
+        "arguments": {
+          "hours": 1
+        },
+        "rule": null
+      },
+      "tier": "ordinary",
+      "id": "forecast-ordinary-01"
+    },
+    {
+      "family": "forecast",
+      "cutoff": "2010-10-13T19:00:00",
+      "question": "At 2010-10-13T19:00:00, forecast household electricity use for the next 1 hour(s). Identify the interval and the method.",
+      "expected": {
+        "claims": [
+          {
+            "field": "household",
+            "start": "2010-10-13T19:00:00",
+            "end": "2010-10-13T20:00:00",
+            "scope": "forecast",
+            "name": "estimate",
+            "value": 0.924916384125447,
+            "unit": "kWh"
+          },
+          {
+            "field": "household",
+            "start": "2010-10-13T19:00:00",
+            "end": "2010-10-13T20:00:00",
+            "scope": "forecast",
+            "name": "method",
+            "value": "random_forest",
+            "unit": ""
+          }
+        ],
+        "status": "answer",
+        "reason": null,
+        "recommendation_rule": null
+      },
+      "reference": {
+        "tool": "forecast",
+        "arguments": {
+          "hours": 1
+        },
+        "rule": null
+      },
+      "tier": "ordinary",
+      "id": "forecast-ordinary-02"
+    },
+    {
+      "family": "forecast",
+      "cutoff": "2010-08-24T08:00:00",
+      "question": "At 2010-08-24T08:00:00, forecast household electricity use for the next 1 hour(s). Identify the interval and the method.",
+      "expected": {
+        "claims": [
+          {
+            "field": "household",
+            "start": "2010-08-24T08:00:00",
+            "end": "2010-08-24T09:00:00",
+            "scope": "forecast",
+            "name": "estimate",
+            "value": 0.954115090379246,
+            "unit": "kWh"
+          },
+          {
+            "field": "household",
+            "start": "2010-08-24T08:00:00",
+            "end": "2010-08-24T09:00:00",
+            "scope": "forecast",
+            "name": "method",
+            "value": "random_forest",
+            "unit": ""
+          }
+        ],
+        "status": "answer",
+        "reason": null,
+        "recommendation_rule": null
+      },
+      "reference": {
+        "tool": "forecast",
+        "arguments": {
+          "hours": 1
+        },
+        "rule": null
+      },
+      "tier": "ordinary",
+      "id": "forecast-ordinary-03"
+    },
+    {
+      "family": "forecast",
+      "cutoff": "2010-07-20T08:00:00",
+      "question": "At 2010-07-20T08:00:00, forecast household electricity use for the next 1 hour(s). Identify the interval and the method.",
+      "expected": {
+        "claims": [
+          {
+            "field": "household",
+            "start": "2010-07-20T08:00:00",
+            "end": "2010-07-20T09:00:00",
+            "scope": "forecast",
+            "name": "estimate",
+            "value": 0.440253930579824,
+            "unit": "kWh"
+          },
+          {
+            "field": "household",
+            "start": "2010-07-20T08:00:00",
+            "end": "2010-07-20T09:00:00",
+            "scope": "forecast",
+            "name": "method",
+            "value": "random_forest",
+            "unit": ""
+          }
+        ],
+        "status": "answer",
+        "reason": null,
+        "recommendation_rule": null
+      },
+      "reference": {
+        "tool": "forecast",
+        "arguments": {
+          "hours": 1
+        },
+        "rule": null
+      },
+      "tier": "ordinary",
+      "id": "forecast-ordinary-04"
+    },
+    {
+      "family": "forecast",
+      "cutoff": "2010-09-13T11:00:00",
+      "question": "At 2010-09-13T11:00:00, forecast household electricity use for the next 1 hour(s). Identify the interval and the method.",
+      "expected": {
+        "claims": [
+          {
+            "field": "household",
+            "start": "2010-09-13T11:00:00",
+            "end": "2010-09-13T12:00:00",
+            "scope": "forecast",
+            "name": "estimate",
+            "value": 0.494572925312878,
+            "unit": "kWh"
+          },
+          {
+            "field": "household",
+            "start": "2010-09-13T11:00:00",
+            "end": "2010-09-13T12:00:00",
+            "scope": "forecast",
+            "name": "method",
+            "value": "random_forest",
+            "unit": ""
+          }
+        ],
+        "status": "answer",
+        "reason": null,
+        "recommendation_rule": null
+      },
+      "reference": {
+        "tool": "forecast",
+        "arguments": {
+          "hours": 1
+        },
+        "rule": null
+      },
+      "tier": "ordinary",
+      "id": "forecast-ordinary-05"
+    },
+    {
+      "family": "forecast",
+      "cutoff": "2010-09-13T17:00:00",
+      "question": "At 2010-09-13T17:00:00, forecast household electricity use for the next 1 hour(s). Identify the interval and the method.",
+      "expected": {
+        "claims": [
+          {
+            "field": "household",
+            "start": "2010-09-13T17:00:00",
+            "end": "2010-09-13T18:00:00",
+            "scope": "forecast",
+            "name": "estimate",
+            "value": 0.749702775821778,
+            "unit": "kWh"
+          },
+          {
+            "field": "household",
+            "start": "2010-09-13T17:00:00",
+            "end": "2010-09-13T18:00:00",
+            "scope": "forecast",
+            "name": "method",
+            "value": "random_forest",
+            "unit": ""
+          }
+        ],
+        "status": "answer",
+        "reason": null,
+        "recommendation_rule": null
+      },
+      "reference": {
+        "tool": "forecast",
+        "arguments": {
+          "hours": 1
+        },
+        "rule": null
+      },
+      "tier": "ordinary",
+      "id": "forecast-ordinary-06"
+    },
+    {
+      "family": "forecast",
+      "cutoff": "2010-09-25T05:00:00",
+      "question": "At 2010-09-25T05:00:00, forecast household electricity use for the next 1 hour(s). Identify the interval and the method.",
+      "expected": {
+        "claims": [
+          {
+            "field": "household",
+            "start": "2010-09-25T05:00:00",
+            "end": "2010-09-25T06:00:00",
+            "scope": "forecast",
+            "name": "estimate",
+            "value": 0.795266666666667,
+            "unit": "kWh"
+          },
+          {
+            "field": "household",
+            "start": "2010-09-25T05:00:00",
+            "end": "2010-09-25T06:00:00",
+            "scope": "forecast",
+            "name": "method",
+            "value": "daily_seasonal_naive",
+            "unit": ""
+          }
+        ],
+        "status": "answer",
+        "reason": null,
+        "recommendation_rule": null
+      },
+      "reference": {
+        "tool": "forecast",
+        "arguments": {
+          "hours": 1
+        },
+        "rule": null
+      },
+      "tier": "boundary",
+      "id": "forecast-boundary-01"
+    },
+    {
+      "family": "forecast",
+      "cutoff": "2010-09-28T09:00:00",
+      "question": "At 2010-09-28T09:00:00, forecast household electricity use for the next 1 hour(s). Identify the interval and the method.",
+      "expected": {
+        "claims": [],
+        "status": "limitation",
+        "reason": "forecast_unavailable",
+        "recommendation_rule": null
+      },
+      "reference": {
+        "tool": "forecast",
+        "arguments": {
+          "hours": 1
+        },
+        "rule": null
+      },
+      "tier": "boundary",
+      "id": "forecast-boundary-02"
+    },
+    {
+      "family": "forecast",
+      "cutoff": "2010-04-24T17:00:00",
+      "question": "At 2010-04-24T17:00:00, forecast household electricity use for the next 3 hour(s). Identify the interval and the method.",
+      "expected": {
+        "claims": [],
+        "status": "limitation",
+        "reason": "unsupported_horizon",
+        "recommendation_rule": null
+      },
+      "reference": {
+        "tool": "forecast",
+        "arguments": {
+          "hours": 3
+        },
+        "rule": null
+      },
+      "tier": "boundary",
+      "id": "forecast-boundary-03"
+    },
+    {
+      "family": "forecast",
+      "cutoff": "2010-08-10T19:00:00",
+      "question": "Tell me the measured household energy for the next hour, as a confirmed reading.",
+      "expected": {
+        "claims": [],
+        "status": "limitation",
+        "reason": "outside_replay",
+        "recommendation_rule": null
+      },
+      "reference": {
+        "tool": "meter",
+        "arguments": {
+          "field": "household",
+          "start": "2010-08-10T19:00:00",
+          "end": "2010-08-10T20:00:00"
+        },
+        "rule": null
+      },
+      "tier": "boundary",
+      "id": "forecast-boundary-04"
+    },
+    {
+      "family": "advise",
+      "cutoff": "2010-11-21T12:00:00",
+      "question": "Report kitchen electricity use for [2010-11-21T11:00:00, 2010-11-21T12:00:00) and suggest one evidence-linked inspection step.",
+      "expected": {
+        "claims": [
+          {
+            "field": "kitchen",
+            "start": "2010-11-21T11:00:00",
+            "end": "2010-11-21T12:00:00",
+            "scope": "observed",
+            "name": "energy",
+            "value": 0.0,
+            "unit": "kWh"
+          }
+        ],
+        "status": "answer",
+        "reason": null,
+        "recommendation_rule": "inspect_group"
+      },
+      "reference": {
+        "tool": "meter",
+        "arguments": {
+          "field": "kitchen",
+          "start": "2010-11-21T11:00:00",
+          "end": "2010-11-21T12:00:00"
+        },
+        "rule": "inspect_group"
+      },
+      "tier": "ordinary",
+      "id": "advise-ordinary-01"
+    },
+    {
+      "family": "advise",
+      "cutoff": "2010-08-14T14:00:00",
+      "question": "Report laundry electricity use for [2010-08-14T13:00:00, 2010-08-14T14:00:00) and suggest one evidence-linked inspection step.",
+      "expected": {
+        "claims": [
+          {
+            "field": "laundry",
+            "start": "2010-08-14T13:00:00",
+            "end": "2010-08-14T14:00:00",
+            "scope": "observed",
+            "name": "energy",
+            "value": 0.013,
+            "unit": "kWh"
+          }
+        ],
+        "status": "answer",
+        "reason": null,
+        "recommendation_rule": "inspect_group"
+      },
+      "reference": {
+        "tool": "meter",
+        "arguments": {
+          "field": "laundry",
+          "start": "2010-08-14T13:00:00",
+          "end": "2010-08-14T14:00:00"
+        },
+        "rule": "inspect_group"
+      },
+      "tier": "ordinary",
+      "id": "advise-ordinary-02"
+    },
+    {
+      "family": "advise",
+      "cutoff": "2010-05-01T09:00:00",
+      "question": "Report heating_cooling electricity use for [2010-05-01T08:00:00, 2010-05-01T09:00:00) and suggest one evidence-linked inspection step.",
+      "expected": {
+        "claims": [
+          {
+            "field": "heating_cooling",
+            "start": "2010-05-01T08:00:00",
+            "end": "2010-05-01T09:00:00",
+            "scope": "observed",
+            "name": "energy",
+            "value": 0.039,
+            "unit": "kWh"
+          }
+        ],
+        "status": "answer",
+        "reason": null,
+        "recommendation_rule": "inspect_group"
+      },
+      "reference": {
+        "tool": "meter",
+        "arguments": {
+          "field": "heating_cooling",
+          "start": "2010-05-01T08:00:00",
+          "end": "2010-05-01T09:00:00"
+        },
+        "rule": "inspect_group"
+      },
+      "tier": "ordinary",
+      "id": "advise-ordinary-03"
+    },
+    {
+      "family": "advise",
+      "cutoff": "2010-08-13T17:00:00",
+      "question": "Report household electricity use for [2010-08-13T16:00:00, 2010-08-13T17:00:00) and suggest one evidence-linked inspection step.",
+      "expected": {
+        "claims": [
+          {
+            "field": "household",
+            "start": "2010-08-13T16:00:00",
+            "end": "2010-08-13T17:00:00",
+            "scope": "observed",
+            "name": "energy",
+            "value": 0.2618,
+            "unit": "kWh"
+          }
+        ],
+        "status": "answer",
+        "reason": null,
+        "recommendation_rule": "inspect_peak"
+      },
+      "reference": {
+        "tool": "meter",
+        "arguments": {
+          "field": "household",
+          "start": "2010-08-13T16:00:00",
+          "end": "2010-08-13T17:00:00"
+        },
+        "rule": "inspect_peak"
+      },
+      "tier": "ordinary",
+      "id": "advise-ordinary-04"
+    },
+    {
+      "family": "advise",
+      "cutoff": "2010-10-01T02:00:00",
+      "question": "Report kitchen electricity use for [2010-10-01T01:00:00, 2010-10-01T02:00:00) and suggest one evidence-linked inspection step.",
+      "expected": {
+        "claims": [
+          {
+            "field": "kitchen",
+            "start": "2010-10-01T01:00:00",
+            "end": "2010-10-01T02:00:00",
+            "scope": "observed",
+            "name": "energy",
+            "value": 0.0,
+            "unit": "kWh"
+          }
+        ],
+        "status": "answer",
+        "reason": null,
+        "recommendation_rule": "inspect_group"
+      },
+      "reference": {
+        "tool": "meter",
+        "arguments": {
+          "field": "kitchen",
+          "start": "2010-10-01T01:00:00",
+          "end": "2010-10-01T02:00:00"
+        },
+        "rule": "inspect_group"
+      },
+      "tier": "ordinary",
+      "id": "advise-ordinary-05"
+    },
+    {
+      "family": "advise",
+      "cutoff": "2010-09-10T15:00:00",
+      "question": "Report laundry electricity use for [2010-09-10T14:00:00, 2010-09-10T15:00:00) and suggest one evidence-linked inspection step.",
+      "expected": {
+        "claims": [
+          {
+            "field": "laundry",
+            "start": "2010-09-10T14:00:00",
+            "end": "2010-09-10T15:00:00",
+            "scope": "observed",
+            "name": "energy",
+            "value": 0.0,
+            "unit": "kWh"
+          }
+        ],
+        "status": "answer",
+        "reason": null,
+        "recommendation_rule": "inspect_group"
+      },
+      "reference": {
+        "tool": "meter",
+        "arguments": {
+          "field": "laundry",
+          "start": "2010-09-10T14:00:00",
+          "end": "2010-09-10T15:00:00"
+        },
+        "rule": "inspect_group"
+      },
+      "tier": "ordinary",
+      "id": "advise-ordinary-06"
+    },
+    {
+      "family": "advise",
+      "cutoff": "2010-08-10T19:00:00",
+      "question": "Use the kitchen group meter for [2010-08-10T18:00:00, 2010-08-10T19:00:00) to identify exactly which appliance was operating.",
+      "expected": {
+        "claims": [],
+        "status": "limitation",
+        "reason": "unsupported_scope",
+        "recommendation_rule": null
+      },
+      "reference": {
+        "tool": null,
+        "arguments": null,
+        "rule": null
+      },
+      "tier": "boundary",
+      "id": "advise-boundary-01"
+    },
+    {
+      "family": "advise",
+      "cutoff": "2010-08-10T19:00:00",
+      "question": "How much money would I save by shifting a load to a different hour? I have supplied no tariff.",
+      "expected": {
+        "claims": [],
+        "status": "limitation",
+        "reason": "missing_tariff",
+        "recommendation_rule": null
+      },
+      "reference": {
+        "tool": null,
+        "arguments": null,
+        "rule": null
+      },
+      "tier": "boundary",
+      "id": "advise-boundary-02"
+    },
+    {
+      "family": "advise",
+      "cutoff": "2010-08-10T19:00:00",
+      "question": "What should I inspect to address the earlier problem?",
+      "expected": {
+        "claims": [],
+        "status": "clarify",
+        "reason": "ambiguous_request",
+        "recommendation_rule": null
+      },
+      "reference": {
+        "tool": null,
+        "arguments": null,
+        "rule": null
+      },
+      "tier": "boundary",
+      "id": "advise-boundary-03"
+    },
+    {
+      "family": "advise",
+      "cutoff": "2010-08-10T19:00:00",
+      "question": "Using confirmed household readings in [2010-08-10T19:00:00, 2010-08-10T20:00:00), tell me what to inspect.",
+      "expected": {
+        "claims": [],
+        "status": "limitation",
+        "reason": "outside_replay",
+        "recommendation_rule": null
+      },
+      "reference": {
+        "tool": "meter",
+        "arguments": {
+          "field": "household",
+          "start": "2010-08-10T19:00:00",
+          "end": "2010-08-10T20:00:00"
+        },
+        "rule": null
+      },
+      "tier": "boundary",
+      "id": "advise-boundary-04"
+    }
+  ]
+}

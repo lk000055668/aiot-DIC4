@@ -1,0 +1,226 @@
+% Energy Detective | ICEIB 2027 | IEEE conference manuscript source
+% Compile twice with: pdflatex -interaction=nonstopmode -halt-on-error main.txt
+% Confirm author order, official English names, affiliations, and contact
+% before submission. Proposal roster: 蔡鈞凱, 吳育倫, 邱敬倫, 蔡昇剛.
+\documentclass[conference]{IEEEtran}
+\usepackage{amsmath}
+\usepackage{cite}
+\usepackage{url}
+\newcommand{\qtext}[1]{\textquotedblleft#1\textquotedblright}
+
+\begin{document}
+
+\title{Energy Detective: An Evidence-Linked Agent for Residential Electricity Analysis}
+
+\author{\IEEEauthorblockN{[Author 1], [Author 2], [Author 3], and [Author 4]}
+\IEEEauthorblockA{\textit{[Department and institution for each author]}\\
+[City, Country]\\
+[Corresponding author e-mail]}}
+
+\maketitle
+
+\begin{abstract}
+Residential electricity records can help households identify when their consumption changes, but an answer expressed in natural language can confuse power with energy, compare the wrong intervals, or attribute a change to an appliance that was never measured separately. This paper proposes Energy Detective, a read-only agent that answers five classes of household electricity questions using a large language model, deterministic analysis tools, and source-linked energy guidance. A historical replay boundary controls which readings and forecast models are available at each decision time. An evidence record links claims to their source intervals, units, coverage, and calculation methods. An external checker tests structured claims against this record and permits one revision before a qualified response is issued. The evaluation protocol compares a random forest with persistence and daily seasonal naive forecasts on a chronological holdout. A separate paired study plans 300 agent runs across 50 tasks to measure whether checking and revision improve answer correctness and evidence consistency, including when the data are insufficient. The protocol also measures unnecessary refusals, latency, and model usage. The paper presents the design and evaluation protocol at the proposal stage.
+\end{abstract}
+
+\begin{IEEEkeywords}
+residential electricity, large language models, tool calling, evidence traceability, load forecasting, anomaly screening
+\end{IEEEkeywords}
+
+\section{Introduction}
+\label{sec:introduction}
+
+A household electricity meter can show when demand changes. Interpreting that change requires knowing which interval was measured, whether the records cover it, and which devices were metered together. A resident asking \qtext{How much more electricity did we use yesterday, and what should I check first?} needs both a comparison and a plan for investigating it. A field experiment on residential energy feedback has measured changes in consumption after making usage information available \cite{feedback}. The present work addresses an earlier question in that chain: whether the information and guidance delivered to a resident agree with the available evidence.
+
+Language interfaces let users ask questions without learning the schema of a meter dataset. However, a fluent answer can attach a correct value to the wrong day, report a kilowatt-hour (kWh) value as kilowatts (kW), or turn a circuit-level observation into an appliance diagnosis. Missing readings can introduce another error if a partial sum is treated as the total for a day. These failures concern the relationship between the answer, its context, and the available measurements.
+
+Energy Detective serves five tasks: historical queries, period comparisons, anomaly screening, one-hour-ahead estimates, and inspection guidance. The proposed system uses published minute-level records from one household \cite{uci}. The study asks whether external claim checking and one revision improve task completion and evidence consistency under an identical tool budget, and how any improvement affects response availability and cost. It separately asks how the candidate forecast compares with two simple baselines on unseen hours.
+
+The contributions are a data contract for field-specific completeness and time-bounded replay, an answer format in which numerical claims point to structured tool evidence, and an evaluation protocol that separates forecast error from the quality of the agent's answer. The protocol includes both answerable questions and cases that call for clarification or a qualified response.
+
+\section{Related Work}
+
+\subsection{Residential Energy Feedback and Forecasting}
+
+Boomsma \textit{et al.} \cite{feedback} investigated real-time residential energy feedback in a field experiment. Their work motivates making consumption information usable and illustrates the role of an intervention study in estimating the effect of feedback on actual use. For short-horizon load prediction, Muqtadir \textit{et al.} \cite{muqtadir} study one-hour residential forecasting with boosting ensembles. This paper uses a random forest as a candidate and includes persistence and daily seasonal naive forecasts to test whether its added complexity improves accuracy over simple temporal dependencies. The forecast is one evidence source in a broader question-answering workflow.
+
+\subsection{Tool-Using Models and Evidence Support}
+
+ReAct demonstrates how a language model can interleave task planning with calls to external resources \cite{react}. Gao \textit{et al.} evaluate both the correctness of generated answers and the support supplied by their citations \cite{alce}. In residential electricity analysis, even a valid evidence identifier may refer to an incompatible field, interval, or comparison direction. Energy Detective therefore specifies checks that compare these attributes with a structured result. Natural-language recommendations also require judgment about whether the cited material supports the proposed action.
+
+He and Jazizadeh investigate context-aware building energy agents and report differences in performance across task types \cite{he}. Jonah \textit{et al.} assess tool-using agents for household load scheduling against an optimization benchmark \cite{jonah}. Jung proposes a multidimensional evaluation of conversational home energy management across extended dialogues \cite{jung}. Energy Detective studies a narrower question within read-only analysis: what changes when a fixed analyst and tool set gains a response checker, one opportunity to revise, and a rule for handling failed checks? A paired evaluation holds the model, question, data, and initial instructions constant so that the comparison targets this combined intervention.
+
+\section{Data and Analytical Methods}
+\label{sec:methods}
+
+\subsection{Replay Boundary and Measurement Contract}
+
+The UCI Individual Household Electric Power Consumption dataset contains 2,075,259 minute records from one residence in Sceaux, France, collected from December 2006 through November 2010. The repository reports missing measurements in approximately 1.25\% of its rows \cite{uci}. The dataset includes minute-averaged whole-house active power in kW and three grouped active-energy channels in watt-hours (Wh) per minute. The channels correspond to the kitchen, the laundry area, and a group containing an electric water heater and an air conditioner. A group measurement supports conclusions about the measured channel. Identifying a specific appliance requires additional data.
+
+The replay clock uses the recorded date and time labels. At an hour boundary \(h\), a read-only view releases readings strictly before \(h\). The forecasting target refers to \([h,h+1\,\mathrm{h})\), and relative dates such as \qtext{yesterday} resolve against the replay date. At 14:00, for example, the latest completed hour is 13:00--14:00 and the next-hour estimate is for 14:00--15:00. These are intervals on the dataset clock. A runtime guard enforces the same cutoff for historical reads, rolling features, and model selection regardless of the time range proposed by the agent.
+
+For interval \(I=[a,b)\), let \(G(I)\) be its expected minute grid and \(V_f(I)\) the subset with valid, distinct readings for field \(f\). With minute-averaged whole-house power \(P_i\) in kW and submeter energy \(e_{j,i}\) in Wh, the observed sums in kWh are
+\begin{align}
+ E_{\mathrm{obs,house}}(I) &= \sum_{i\in V_{\mathrm{house}}(I)} \frac{P_i}{60},\\
+ E_{\mathrm{obs},j}(I) &= \sum_{i\in V_j(I)} \frac{e_{j,i}}{1000}.
+\end{align}
+Coverage is \(\lvert V_f(I)\rvert/\lvert G(I)\rvert\). A complete hour requires all 60 expected minutes for the requested field. A complete day requires every expected minute on the recorded clock grid, including checks on the first and last date of the file. A trace records any identical duplicate rows that are collapsed. Conflicting readings for a minute are marked unresolved for the affected field. Missing or unresolved values contribute neither an observation nor a zero. For incomplete intervals, the tool can return a partial observed sum and its coverage when at least one observation exists. Any claim about a full interval requires complete coverage for the cited field.
+
+Comparisons require compatible fields and intervals that match the stated comparison basis. For complete baseline \(A\) and comparison \(B\), the signed difference is \(E(B)-E(A)\). The relative change is \(100[E(B)-E(A)]/E(A)\) percent when the baseline is positive. A zero baseline permits an absolute difference and leaves the percentage undefined. An incomplete day can support a description of its observed portion and the coverage. A full-day percentage requires both days to be complete. The highest-use \emph{hour} is defined by hourly energy over the eligible intervals. Estimating an instantaneous peak would require finer measurements.
+
+\subsection{Anomaly Screening}
+
+For each complete target hour at time \(t<h\), the screening tool uses up to 56 preceding calendar days of complete observations at the same hour of day and of the same day type (weekday or weekend). It forms the reference set \(R_t\) using hours strictly before \(t\), even when later observations are visible at replay time \(h\). Let \(x_t\) denote the observed target energy, \(m_t=\operatorname{median}(R_t)\), and \(d_t=\operatorname{median}_{r\in R_t}|r-m_t|\). The rule computes the modified score \cite{nist}
+\begin{equation}
+ z_t = 0.6745\,\frac{x_t-m_t}{d_t}.
+\end{equation}
+It flags a candidate when \(|z_t|>3.5\), provided \(\lvert R_t\rvert\geq14\) and \(d_t>0\). Incomplete target data, too few reference readings, or zero deviation produce a limitation status. With sufficient evidence, the output gives the observed value, reference median, sample count, direction, and score. The window, day types, minimum count, and threshold are design settings. A candidate identifies an unusual reading relative to this reference group. Establishing a fault or waste requires additional evidence about occupancy, equipment, or other conditions.
+
+\subsection{One-Hour-Ahead Energy Forecast}
+
+At decision time \(h\), let \(y_h\) be whole-house energy in kWh during \([h,h+1\,\mathrm{h})\). Persistence predicts \(y_{h-1}\), and daily seasonal naive predicts \(y_{h-24}\), with subscripts offset in hours on the recorded grid \cite{fpp}. The candidate random forest \cite{breiman} uses lagged hourly energy at 1, 2, 24, and 168 hours, along with mean and standard deviation over the previous 3 and 24 consecutive hours. Calendar features are hour, day of week, month, and a weekend indicator for the target interval. Initial forest settings are 200 trees, maximum depth 12, minimum leaf size 5, and seed 42. A forecast requires every hour actually used by its features to be complete. When the forest cannot run, an available baseline may be shown with its method explicitly identified. Every forecast reports its target interval and estimate status.
+
+The hourly grid is divided chronologically into 70\% training, 15\% validation, and 15\% test \emph{before} incomplete samples are filtered. Each training label belongs to the training segment, and any configuration choice uses only training and validation. If the final configuration is refitted on the first 85\%, the model is frozen for testing. Model provenance records which labels were used and the end of the latest training label interval. That interval must end at or before the replay cutoff associated with a prediction. During the test, a later hour may use completed observations from earlier test hours as features. The resulting errors describe sequential one-step forecasts with updated observations.
+
+\section{Agent Architecture}
+\label{sec:architecture}
+
+\begin{figure}[!t]
+ \centering
+ \footnotesize
+ \setlength{\tabcolsep}{0pt}
+ \begin{tabular}{c}
+  \fbox{\makebox[0.84\columnwidth]{(1) User question and replay boundary \(h\)}}\\
+  \(\downarrow\)\\
+  \fbox{\makebox[0.84\columnwidth]{(2) Tool selection and answer drafting}}\\
+  \(\updownarrow\)\\
+  \fbox{\makebox[0.84\columnwidth]{(3) Meter view, (4) analytics, (5) knowledge}}\\
+  \(\downarrow\)\\
+  \fbox{\makebox[0.84\columnwidth]{(6) Evidence records with source identifiers}}\\
+  \(\downarrow\)\\
+  \fbox{\makebox[0.84\columnwidth]{(7) Check draft against cited evidence}}\\
+  \(\downarrow\)\\
+  \fbox{\makebox[0.84\columnwidth]{(8) Answer, clarification, or limitation}}
+ \end{tabular}
+ \caption{Proposed answer workflow. The agent drafts from the evidence records. The checker receives both the records and the draft and can return discrepancies for one revision.}
+ \label{fig:workflow}
+\end{figure}
+
+\subsection{Tool Coordination and Evidence}
+
+Fig.~\ref{fig:workflow} summarizes the eight components. A single cloud-based language model resolves intent, selects from fixed tools, and requests clarification when necessary. The data access layer enforces the replay and completeness rules of Section~\ref{sec:methods}. Analytics tools return typed queries, comparisons, candidate flags, and forecast estimates. A Streamlit interface is planned to present the replay time, answer, data coverage, and supporting plots. A plot and its associated text refer to the same analysis result identifier.
+
+The knowledge tool retrieves a small, versioned collection of source-linked rules by topic. Each entry records a definition, applicable conditions, and limits on inference. Rules cover unit conversion, measurement granularity, fair comparisons, incomplete records, forecasting, and interpretation of deviations. An inspection suggestion draws on both an applicable rule and the relevant measurement when the latter is available. For example, a group-level increase may justify checking what ran during the corresponding hours. A general rule about appliance use cannot establish which appliance ran. Similarly, shifting an activity can affect peak demand or cost while leaving its energy consumption unchanged, and a cost estimate requires applicable tariff inputs \cite{flexibility}.
+
+Every tool result records its identifier, source and version, query parameters, replay cutoff, interval, field, coverage, status, units, and calculation method, with absent fields marked where inapplicable. Forecast records additionally identify the model and training cutoff. The agent produces structured claims that reference a result identifier and name the relevant field, interval, value, unit, and claim type. These records allow an evaluator to distinguish what the tool returned from how the agent described it.
+
+\subsection{Checking and Bounded Revision}
+
+The external checker confirms that a cited record exists, belongs to the same replay context, and supports the declared measurement or estimate. It compares normalized intervals, units, values, and direction, checks the comparison denominator, and requires incomplete data and forecast status to be expressed in the response. Where values are reported to \(p\) decimal places, the equivalence test allows half a unit in the last place plus a small floating-point tolerance. Direction is checked against the unrounded difference. The front end formats numeric fields from the structured response using the same renderer in both experimental conditions. Free-text recommendations are subject to explicit scope rules when checking is enabled and are assessed independently in the study.
+
+Each request can initiate up to eight tool calls, including failed attempts. The checker can send a list of discrepancies to the agent for one revision. Any calls during revision use the remaining original budget. The revised response is checked again. If it still fails, or a required tool result is unavailable, the interface returns fixed text populated only with verified partial evidence and the relevant limitation. A material ambiguity about the interval or equipment is handled by asking for the missing information. A clarification ends the current task, and a subsequent reply starts a new task.
+
+\section{Worked Examples}
+\label{sec:examples}
+
+The following constructed cases illustrate the specified behavior. At replay time 14:00, suppose the preceding hour contains 59 valid whole-house readings, each \(1.20\) kW. The observed portion is \(59(1.20/60)=1.18\) kWh at 59/60 coverage. The hour has no verified full total. Because this hour is needed as a forecast input, both persistence and the forest are unavailable at that cutoff. A complete hour at the daily lag can still support the daily seasonal naive estimate for 14:00--15:00.
+
+For a separate comparison, suppose that yesterday and the preceding day have verified totals of 9.60 and 8.00 kWh, respectively, for the same field. The comparison yields an increase of 1.60 kWh, or 20\%. A draft claiming a \qtext{20\% decrease} fails the direction check even if it cites the correct comparison. A draft for the wrong day also fails even if its number happens to agree. Any suggestion about which appliance to investigate must use the measurement granularity and relevant hours in the evidence.
+
+For an anomaly example, suppose a complete target hour yields 2.20 kWh, and a qualifying reference set of 14 prior observations has a median of 1.00 kWh and a median absolute deviation of 0.20 kWh. The score is 4.047, so the rule flags a high-use candidate. If the deviation were zero, the rule would return an unscored limitation. These are expected outcomes for checks of the classification rule and its boundary behavior.
+
+\section{Evaluation Protocol}
+\label{sec:evaluation}
+
+\subsection{Forecast Accuracy and Coverage}
+
+Let \(S\) contain the test hours with a complete measured target and predictions from all three methods. For method \(m\), define the error \(e_{m,h}=\widehat{y}_{m,h}-y_h\). The planned metrics, both in kWh, are
+\begin{align}
+ \mathrm{MAE}_m &= |S|^{-1}\sum_{h\in S}|e_{m,h}|,\\
+ \mathrm{RMSE}_m &= \sqrt{|S|^{-1}\sum_{h\in S}e_{m,h}^{2}}.
+\end{align}
+The report will include \(|S|\), each method's availability over all scheduled test hours, and counts removed for incomplete targets or features. Availability uses all scheduled hours because a resident can ask for a forecast even when the target later proves unavailable for scoring. If \(S\) is empty, paired forecast errors are undefined. Because the common set can favor periods with more complete data, both errors and availability are necessary for interpretation. Anomaly screening will be checked against arithmetic fixtures, chronological isolation, and threshold sensitivity. Any injected anomalies will be logged and scored as synthetic cases, with separate reporting from exploratory cases in the original series.
+
+\subsection{Task Set and Paired Conditions}
+
+An independent 10-question pilot will refine tool descriptions and scoring instructions. The frozen formal set will contain 50 tasks, with 10 per family and six ordinary plus four boundary cases in each family. Table~\ref{tab:tasks} gives example scoring targets. Each task specifies the wording, replay cutoff, expected fields or limitation behavior, and permitted evidence. The replay cutoffs are in the final test segment. Missing-data masks or simulated failures apply only to a test view. Answer keys are independently calculated or reviewed using the same visible data, and are reserved for scoring.
+
+\begin{table}[!t]
+ \caption{Planned Task Families and Boundary Cases}
+ \label{tab:tasks}
+ \centering
+ \footnotesize
+ \begin{tabular}{@{}p{0.20\columnwidth}p{0.34\columnwidth}p{0.38\columnwidth}@{}}
+  \hline
+  \textbf{Family} & \textbf{Ordinary target} & \textbf{Boundary target}\\
+  \hline
+  Query & Report interval energy and coverage & Identify an incomplete day\\
+  Compare & Report signed and relative changes & Withhold percentage for zero baseline\\
+  Screen & Cite score and historical reference & Explain insufficient reference or zero deviation\\
+  Forecast & Identify target hour and method & Label available fallback or report unavailability\\
+  Advise & Give an evidence-linked inspection step & Ask for appliance-level data before assigning a cause\\
+  \hline
+ \end{tabular}
+\end{table}
+
+Condition A delivers the draft to offline evaluation without the external checker. Condition B uses the checker, at most one revision, and a fixed limitation response when verification fails. Both receive the same initial prompt, answer schema, model version and settings, dataset view, tools, knowledge, and eight-call limit. Both can clarify independently and record their evidence. Each question is executed three times per condition, for 300 planned executions. Runs begin with fresh task state and interleave conditions to reduce the influence of time-varying service behavior. Each execution may require multiple model calls. This comparison estimates the effect of the combined verification and revision policy, including its extra generation.
+
+\subsection{Scoring, Reporting, and Reproducibility}
+
+Task completion is the primary paired outcome. An ordinary task succeeds when it supplies its required answer fields with correct values, units, timing, and scope. A boundary task succeeds when it follows the predefined clarification or limitation behavior. Quantitative checks count a missing required field as a failure. Evidence consistency is scored against the source records for externally verifiable assertions, with assertion counts and required-field coverage reported alongside it. The report will also include the appropriate limitation rate on boundary tasks and the unnecessary refusal rate on ordinary tasks.
+
+Two reviewers will independently score applicable recommendations for strength of evidence, scope of inference, and practical actionability on a 0--2 scale per dimension. Condition identifiers will be withheld from those reviewers where feasible. Initial agreement and the resolution of disagreements will be reported. Elapsed time, tool and revision counts, model calls, token usage, and recorded costs will characterize the operational trade-off. The analysis will retain failed and timed-out runs. For a paired completion comparison, the three runs will be averaged within each question and condition, with differences summarized across the 50 questions and by task family. Any bootstrap interval will resample questions as paired units. This preserves dependence among repeats of the same question. The question set is purposive, so any interval describes variability within this evaluation design.
+
+Reproduction will require the dataset checksum, parsing and split boundaries, forecast configuration, model and prompt versions, question and answer key versions, and checker rules. Run records will preserve tool statuses, response and evidence identifiers, and validation outcomes. The cloud model and its generation settings will be fixed before the formal evaluation. At this stage, application implementation, forecast training, and empirical evaluation are pending. The calculations in Section~\ref{sec:examples} establish expected behavior for later implementation tests.
+
+\section{Limitations}
+
+The record covers one household in France during 2006--2010. Its equipment, climate, and load patterns give limited evidence for present-day households elsewhere, including Taiwan. Group-level meter channels limit attribution. The dataset lacks fault labels, occupancy records, applicable household tariff inputs, and observations of behavior after advice was delivered. A field intervention with a comparison group and follow-up measurements would be needed to estimate actual savings.
+
+Strict completeness can reduce the set of periods and questions that the agent can answer, particularly if missingness clusters. The matched-hour anomaly baseline accounts for hour of day and weekday or weekend status, while weather, holidays, and household activity are unobserved. The task set measures performance on selected requests in historical replay. Multi-turn usability, model changes, and performance with different household datasets require further study. The checker covers structured details and specified scope constraints, while the practical relevance of open-ended advice remains a matter for independent review.
+
+\section{Conclusion}
+
+Energy Detective specifies how a household electricity question can be resolved against time-bounded meter data, a deterministic calculation, and a source-linked explanation. Its design addresses unit errors, incomplete intervals, unsupported appliance attribution, and forecasts based on information available after the replay cutoff. The evaluation protocol tests the forecast on a chronological holdout and compares answers with and without claim checking under the same tool budget. Together, these tests are designed to show whether verification improves the rate of correct, supported responses, how frequently it withholds a result, and what it costs to run.
+
+\begin{thebibliography}{00}
+
+\bibitem{feedback}
+M. Boomsma, K. Vringer, and D. van Soest, \qtext{The impact of real-time energy consumption feedback on residential gas and electricity usage,} \emph{J. Environ. Econ. Manage.}, vol. 132, Art. no. 103163, 2025, doi: 10.1016/j.jeem.2025.103163.
+
+\bibitem{uci}
+G. Hebrail and A. Berard, \qtext{Individual household electric power consumption,} UCI Machine Learning Repository, dataset, 2006, doi: 10.24432/C58K54.
+
+\bibitem{muqtadir}
+A. Muqtadir, B. Li, Z. Ying, C. Songsong, and S. N. Kazmi, \qtext{Nowcasting the next hour of residential load using boosting ensemble machines,} \emph{Sci. Rep.}, vol. 15, Art. no. 7157, 2025, doi: 10.1038/s41598-025-91767-6.
+
+\bibitem{react}
+S. Yao \textit{et al.}, \qtext{ReAct: Synergizing reasoning and acting in language models,} in \emph{Proc. Int. Conf. Learn. Represent. (ICLR)}, 2023. [Online]. Available: \url{https://openreview.net/forum?id=WE_vluYUL-X}
+
+\bibitem{alce}
+T. Gao, H. Yen, J. Yu, and D. Chen, \qtext{Enabling large language models to generate text with citations,} in \emph{Proc. Conf. Empir. Methods Nat. Lang. Process. (EMNLP)}, 2023, pp. 6465--6488, doi: 10.18653/v1/2023.emnlp-main.398.
+
+\bibitem{he}
+T. He and F. Jazizadeh, \qtext{Context-aware LLM-based AI agents for human-centered energy management systems in smart buildings,} arXiv:2512.25055v1, 2025.
+
+\bibitem{jonah}
+S. Jonah, Q. Moses, A. Babatunde, M. Ajao-Olarinoye, and D. Bammeke, \qtext{LLMs for agentic home energy management,} arXiv:2607.04569v2, 2026.
+
+\bibitem{jung}
+W. Jung, \qtext{A comprehensive evaluation framework for conversational home energy management systems,} arXiv:2610.00073v2, 2026.
+
+\bibitem{nist}
+NIST/SEMATECH, \qtext{Detection of outliers,} in \emph{e-Handbook of Statistical Methods}, sec. 1.3.5.17. [Online]. Available: \url{https://www.itl.nist.gov/div898/handbook/eda/section3/eda35h.htm}
+
+\bibitem{fpp}
+R. J. Hyndman and G. Athanasopoulos, \emph{Forecasting: Principles and Practice}, 3rd ed. Melbourne, Australia: OTexts, 2021. [Online]. Available: \url{https://otexts.com/fpp3/}
+
+\bibitem{breiman}
+L. Breiman, \qtext{Random forests,} \emph{Mach. Learn.}, vol. 45, no. 1, pp. 5--32, 2001, doi: 10.1023/A:1010933404324.
+
+\bibitem{flexibility}
+International Energy Agency, \emph{The Value of Demand Flexibility: Benefits beyond Balancing}. Paris, France: IEA, 2025. [Online]. Available: \url{https://www.iea.org/reports/the-value-of-demand-flexibility}
+
+\end{thebibliography}
+
+\end{document}
