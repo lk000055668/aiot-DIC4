@@ -12,7 +12,7 @@ Energy Detective 支援的任務設計涵蓋歷史用電查詢、時段比較、
 | 了解研究動機與早期設計 | [DIC3 研究提案摘要](DIC3-ProjectRefactor/readme.md) |
 | 重現實驗或檢查評分方式 | [實驗說明與執行指令](ICEIB%20paper/experiments/README.md) |
 | 核對實測數據 | [結果摘要與軟體版本](ICEIB%20paper/experiments/results/summary.json) · [逐時預測與異常篩檢紀錄](ICEIB%20paper/experiments/results/) |
-| 接續論文修訂 | [OpenSpec 修訂提案](openspec/changes/revise-iceib-paper/proposal.md) · [驗收條件](openspec/changes/revise-iceib-paper/specs/iceib-manuscript/spec.md) · [待辦與進度](openspec/changes/revise-iceib-paper/tasks.md) |
+| 接續論文修訂 | [OpenSpec 專案結構](#openspec-專案結構) · [待辦與進度](openspec/changes/revise-iceib-paper/tasks.md) |
 
 ## 實驗進度
 
@@ -28,6 +28,37 @@ Energy Detective 支援的任務設計涵蓋歷史用電查詢、時段比較、
 python 'ICEIB paper/experiments/evaluate.py' 'C:/data/household-power.zip' './replay-results'
 ```
 
-## 論文修訂
+## OpenSpec 專案結構
 
-重大修訂沿用 OpenSpec 的 `revise-iceib-paper`。撰稿依循 [專案規範](AGENTS.md) 與 [A-to-Z 寫作範例](DIC3-ProjectRefactor/myplan/A2Z%20outline%20example.pdf)。目前工作稿採 IEEEtran conference 格式，最終投稿範本與作者資料仍待確認。編輯前先核對 Overleaf 原稿與文獻，完成後編譯並檢查引用、版面及待補結果。
+目前的論文修訂記錄在 `openspec/changes/revise-iceib-paper/`。
+
+```text
+openspec/
+├── config.yaml
+├── specs/
+│   └── .gitkeep
+└── changes/
+    ├── archive/
+    │   └── .gitkeep
+    └── revise-iceib-paper/
+        ├── .openspec.yaml
+        ├── proposal.md
+        ├── design.md
+        ├── tasks.md
+        └── specs/
+            └── iceib-manuscript/
+                └── spec.md
+```
+
+| 檔案或目錄 | 用途 |
+| --- | --- |
+| [config.yaml](openspec/config.yaml) | 設定本專案的 OpenSpec 工作流程，目前使用 `spec-driven`。 |
+| [specs/](openspec/specs/) | 存放專案現行規格，目前只有目錄保留檔。 |
+| [changes/archive/](openspec/changes/archive/) | 存放已歸檔的變更，目前只有目錄保留檔。 |
+| [.openspec.yaml](openspec/changes/revise-iceib-paper/.openspec.yaml) | 記錄這項變更的 OpenSpec 設定。 |
+| [proposal.md](openspec/changes/revise-iceib-paper/proposal.md) | 說明論文為何修訂，以及修訂範圍。 |
+| [design.md](openspec/changes/revise-iceib-paper/design.md) | 記錄章節與 A-to-Z 指南的對照、實驗設計及修訂決策。 |
+| [spec.md](openspec/changes/revise-iceib-paper/specs/iceib-manuscript/spec.md) | 定義稿件結構、實驗證據及投稿格式的驗收條件。 |
+| [tasks.md](openspec/changes/revise-iceib-paper/tasks.md) | 追蹤撰稿、實驗、審查與投稿準備進度。 |
+
+接續修訂時，先查看 `proposal.md` 與 `design.md`，從 `tasks.md` 選擇待辦，並依 `spec.md` 驗收後勾選完成。撰稿依循 [專案規範](AGENTS.md) 與 [A-to-Z 寫作範例](DIC3-ProjectRefactor/myplan/A2Z%20outline%20example.pdf)。目前工作稿採 IEEEtran conference 格式，最終投稿範本與作者資料仍待確認。編輯前先核對 Overleaf 原稿與文獻，完成後編譯並檢查引用、版面及待補結果。
